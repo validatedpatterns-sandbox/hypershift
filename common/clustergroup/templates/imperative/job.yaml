@@ -31,6 +31,9 @@ spec:
               env:
                 - name: HOME
                   value: /git/home
+            {{- range .extraEnv }}
+                - {{ .name }}
+            {{- end }}
               workingDir: /git/repo
               # We have a default timeout of 600s for each playbook. Can be overridden
               # on a per-job basis

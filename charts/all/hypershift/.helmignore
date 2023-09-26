@@ -21,3 +21,6 @@
 .idea/
 *.tmproj
 .vscode/
+
+# Ignore Ansible Directory
+templates/ansible/

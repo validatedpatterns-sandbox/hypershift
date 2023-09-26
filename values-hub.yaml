@@ -6,19 +6,12 @@ clusterGroup:
     - open-cluster-management
     - vault
     - golang-external-secrets
-#    - multicluster-engine
 
   subscriptions:
     acm:
       name: advanced-cluster-management
       namespace: open-cluster-management
       channel: release-2.8
-      #csv: advanced-cluster-management.v2.6.1
-   # mce:
-   #   name: multicluster-engine:
-   #   namespace: multicluster-engine
-   #   channel: stable-2.3
-
   projects:
     - hub
     - hypershift
@@ -60,7 +53,22 @@ clusterGroup:
     # imagePullPolicy is set to always: imperative.imagePullPolicy
     # For additional overrides that apply to the jobs, please refer to
     # https://hybrid-cloud-patterns.io/imperative-actions/#additional-job-customizations
+    namespace: multicluster-engine 
     jobs:
+    - name: hypershift-config
+      playbook: ansible/hypershift/site.yaml
+      timeout: 300
+      extraEnv:
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef: 
+              name: awscreds
+              key: aws_access_key_id
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef: 
+              name: awscreds
+              key: aws_secret_access_key
     - name: hello-world
       # ansible playbook to be run
       playbook: common/ansible/playbooks/hello-world/hello-world.yaml
