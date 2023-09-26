@@ -56,19 +56,15 @@ clusterGroup:
     namespace: multicluster-engine 
     jobs:
     - name: hypershift-config
-      playbook: ansible/hypershift/site.yaml
+      playbook: ansible/site.yaml
       timeout: 300
-      extraEnv:
+      secretEnvs:
         - name: AWS_ACCESS_KEY_ID
-          valueFrom:
-            secretKeyRef: 
-              name: awscreds
-              key: aws_access_key_id
+          refName: awscreds
+          refKey: aws_access_key_id
         - name: AWS_SECRET_ACCESS_KEY
-          valueFrom:
-            secretKeyRef: 
-              name: awscreds
-              key: aws_secret_access_key
+          refName: awscreds
+          refKey: aws_secret_access_key
     - name: hello-world
       # ansible playbook to be run
       playbook: common/ansible/playbooks/hello-world/hello-world.yaml
