@@ -15,7 +15,7 @@ clusterGroup:
       channel: stable-2.3
     
     s3:
-      name: ack-s3-controller
+      name: ack-system
       namespace: ack-system
       channel: alpha
       source: community-operators
