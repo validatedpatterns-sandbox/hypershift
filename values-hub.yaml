@@ -6,12 +6,18 @@ clusterGroup:
     - vault
     - golang-external-secrets
     - multicluster-engine
+    - ack-system
 
   subscriptions:
     mce:
       name: multicluster-engine
       namespace: multicluster-engine
       channel: stable-2.3
+    
+    s3:
+      name: ack-s3-controller
+      namespace: ack-system
+      channel: alpha
 
   projects:
     - hub
