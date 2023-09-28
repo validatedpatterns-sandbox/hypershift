@@ -6,6 +6,7 @@ clusterGroup:
 #    - open-cluster-management
     - vault
     - golang-external-secrets
+    - multicluster-engine
 
   subscriptions:
     #acm:
