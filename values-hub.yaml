@@ -6,7 +6,6 @@ clusterGroup:
     - vault
     - golang-external-secrets
     - multicluster-engine
-    - ack-system
 
   subscriptions:
     mce:
