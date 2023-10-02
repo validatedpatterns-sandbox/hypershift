@@ -9,9 +9,6 @@ secretStore:
 awscredentials:
   key: secret/data/hub/aws
 
-openshiftpullsecret:
-  key: secret/data/hub/openshiftPullSecret
-
 global:
   hubClusterDomain: hub.example.com
   localClusterDomain: region-one.example.com
