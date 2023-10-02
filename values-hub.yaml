@@ -9,11 +9,11 @@ clusterGroup:
     - ack-system
 
   subscriptions:
-#    mce:
-#      name: multicluster-engine
-#      namespace: multicluster-engine
-#      channel: stable-2.3
-#    
+    mce:
+      name: multicluster-engine
+      namespace: multicluster-engine
+      channel: stable-2.3
+    
 #    s3:
 #      name: ack-system
 #      namespace: ack-system
