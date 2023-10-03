@@ -2,6 +2,9 @@ clusterGroup:
   name: hub
   isHubCluster: true
 
+  operatorgroupExcludes:
+    - ack-system
+
   namespaces:
     - vault
     - golang-external-secrets
@@ -14,11 +17,11 @@ clusterGroup:
       namespace: multicluster-engine
       channel: stable-2.3
     
-    s3:
-      name: ack-s3-controller
-      namespace: ack-system
-      channel: alpha
-      source: community-operators
+#    s3:
+#      name: ack-s3-controller
+#      namespace: ack-system
+#      channel: alpha
+#      source: community-operators
 
   projects:
     - hub
