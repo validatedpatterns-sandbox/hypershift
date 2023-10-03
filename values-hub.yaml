@@ -38,11 +38,11 @@ clusterGroup:
       project: hub
       path: common/golang-external-secrets
 
-#    hypershift:
-#      name: hypershift
-#      namespace: multicluster-engine
-#      project: hypershift
-#      path: charts/all/hypershift
+    hypershift:
+      name: hypershift
+      namespace: multicluster-engine
+      project: hypershift
+      path: charts/all/hypershift
 
   imperative:
     # NOTE: We *must* use lists and not hashes. As hashes lose ordering once parsed by helm
