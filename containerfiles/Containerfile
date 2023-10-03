@@ -8,4 +8,5 @@ RUN curl -skLfO https://hypershift-cli-download-multicluster-engine.apps.hcp.aws
     chmod 775 /hypershift/.aws && \
     rm -rf hypershift.tar.gz
 USER 1001
+WORKDIR /hypershift
 CMD /usr/local/bin/hypershift
