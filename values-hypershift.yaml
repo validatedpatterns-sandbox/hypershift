@@ -1,3 +1,0 @@
-s3_bucket_name: hypershfittest-hcp
-s3_region: us-west-2
-credentials_file_path: '/hypershift/.aws/credentials'
