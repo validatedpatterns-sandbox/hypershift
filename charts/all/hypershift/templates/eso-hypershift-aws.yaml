@@ -4,7 +4,7 @@ kind: ExternalSecret
 metadata:
   name: hypershift-eso-aws
   namespace: local-cluster
-  argocd.argoproj.io/sync-wave: "5"
+  argocd.argoproj.io/sync-wave: '5'
 spec:
   refreshInterval: 15s
   secretStoreRef:
