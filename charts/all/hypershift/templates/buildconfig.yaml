@@ -17,7 +17,7 @@ spec:
     dockerStrategy:
       dockerfilePath: {{ .Values.buildconfig.dockerfilePath | default "Containerfile" }}
   triggers:
-    - type: ImageChange
+    - type: ConfigChange
   output:
     to:
       kind: ImageStreamTag

@@ -23,7 +23,7 @@ buildconfig:
     ref: hypershift-mce
     contextDir: containerfiles
   dockerfilePath: Containerfile
-  triggers: ImageChange
+  triggers: ConfigChange
 
 ackS3:
   ack_enable_development_logging: true
