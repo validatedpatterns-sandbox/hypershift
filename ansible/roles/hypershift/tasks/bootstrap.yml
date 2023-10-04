@@ -7,11 +7,11 @@
     file: s3.yml
   register: s3_complete
 
-- name: "configure hypershift | Adding hypershift capability"
-  ansible.builtin.command:
-    cmd: |
-      hypershift install \
-        --oidc-storage-provider-s3-bucket-name {{ s3_bucket_name }} \
-        --oidc-storage-provider-s3-credentials {{ aws_creds_file }} \
-        --oidc-storage-provider-s3-region {{ aws_region }}
-  when: s3_complete is changed
+#- name: "configure hypershift | Adding hypershift capability"
+#  ansible.builtin.command:
+#    cmd: |
+#      hypershift install \
+#        --oidc-storage-provider-s3-bucket-name {{ s3_bucket_name }} \
+#        --oidc-storage-provider-s3-credentials {{ aws_creds_file }} \
+#        --oidc-storage-provider-s3-region {{ aws_region }}
+#  when: s3_complete is changed

@@ -1,9 +1,8 @@
 ---
 # defaults file for hypershift
 
-s3:
-  bucket_name: hostedcp-test
-  region: 'us-east-2'
+s3_bucket_name: hostedcp-test
+region: 'us-east-2'
 
 aws_creds_file: ~/.aws/credentials
 pull_secret_file: ~/.pullsecret.json
