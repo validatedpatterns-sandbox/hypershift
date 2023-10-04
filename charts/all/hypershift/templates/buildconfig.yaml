@@ -1,7 +1,7 @@
 kind: BuildConfig
 apiVersion: build.openshift.io/v1
 metadata:
-  name: hcpcli-bc
+  name: hcp-cli-bc
   namespace: multicluster-engine
   annotations:
     argocd.argoproj.io/sync-wave: "2"
