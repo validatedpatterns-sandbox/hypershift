@@ -3,16 +3,19 @@ apiVersion: "external-secrets.io/v1beta1"
 kind: ExternalSecret
 metadata:
   name: hypershift-eso-aws
-  namespace: multicluster-engine
+  namespace: local-cluster
 spec:
   refreshInterval: 15s
   secretStoreRef:
     name: {{ .Values.secretStore.name }}
     kind: {{ .Values.secretStore.kind }}
   target:
-    name: awscreds
+    name: hypershift-operator-oidc-provider-s3-credentials
     template:
       type: Opaque
+      data:
+        region: {{ .Values.s3.region }}
+        bucket: {{ .Values.s3.bucketName }}
   dataFrom:
   - extract:
-      key: {{ .Values.awscredentials.key }}
+      key: {{ .Values.awsCredentials.key }}
