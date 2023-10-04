@@ -9,7 +9,7 @@ clusterGroup:
     - vault
     - golang-external-secrets
     - multicluster-engine
-    - ack-system
+#    - ack-system
 
   subscriptions:
     mce:
@@ -26,7 +26,7 @@ clusterGroup:
   projects:
     - hub
     - hypershift
-    - s3
+#    - s3
 
   applications:
     vault:
@@ -56,16 +56,6 @@ clusterGroup:
     # https://hybrid-cloud-patterns.io/imperative-actions/#additional-job-customizations
     namespace: imperative
     jobs:
-#    - name: hypershift-config
-#      playbook: ansible/site.yaml
-#      timeout: 300
-#      secretEnvs:
-#        - name: AWS_ACCESS_KEY_ID
-#          refName: awscreds
-#          refKey: aws_access_key_id
-#        - name: AWS_SECRET_ACCESS_KEY
-#          refName: awscreds
-#          refKey: aws_secret_access_key
     - name: hello-world
       # ansible playbook to be run
       playbook: common/ansible/playbooks/hello-world/hello-world.yaml
