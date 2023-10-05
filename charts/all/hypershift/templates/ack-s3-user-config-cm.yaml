@@ -9,4 +9,4 @@ data:
 {{- range $k, $v := .Values.ackS3 }}
   {{ $k | upper }}: {{ $v }}
 {{- end }}
-  aws_region: {{ $.Values.s3.region }}
+  AWS_REGION: {{ $.Values.s3.region }}
