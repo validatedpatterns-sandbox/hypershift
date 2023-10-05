@@ -29,11 +29,11 @@ buildconfig:
 ackS3:
   ack_enable_development_logging: true
   ack_log_level: debug
-  ack_watch_namespace: ""
+  ack_watch_namespace:
   ack_resource_tags: acktagged
-  ack_endpoint_url: ""
+  ack_endpoint_url:
   enable_leader_election: true
-  leader_election_namespace: ""
+  leader_election_namespace:
 
 global:
   hubClusterDomain: hub.example.com
