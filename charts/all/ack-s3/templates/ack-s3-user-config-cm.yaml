@@ -10,6 +10,6 @@ data:
   {{ $k | upper }}: {{ $v | quote }}
 {{- end }}
   AWS_REGION: {{ $.Values.s3.region | quote}}
-  ACK_WATCH_NAMESPACE:
-  AWS_ENDPOINT_URL:
-  LEADER_ELECTION_NAMESPACE:
+  ACK_WATCH_NAMESPACE: ""
+  AWS_ENDPOINT_URL: ""
+  LEADER_ELECTION_NAMESPACE: ""
