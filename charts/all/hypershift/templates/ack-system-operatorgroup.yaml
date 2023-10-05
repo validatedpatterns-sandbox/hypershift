@@ -3,7 +3,7 @@ kind: OperatorGroup
 metadata:
   annotations:
     olm.providedAPIs: Bucket.v1alpha1.s3.services.k8s.aws
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "-1"
   name: ack-system-operator-group
   namespace: ack-system
 spec:
