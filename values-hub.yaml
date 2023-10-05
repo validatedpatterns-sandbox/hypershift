@@ -47,6 +47,12 @@ clusterGroup:
       project: hypershift
       path: charts/all/hypershift
 
+    s3:
+      name: s3-controller
+      namespace: ack-system
+      project: s3
+      path: charts/all/ack-s3
+
   imperative:
     # NOTE: We *must* use lists and not hashes. As hashes lose ordering once parsed by helm
     # The default schedule is every 10 minutes: imperative.schedule
