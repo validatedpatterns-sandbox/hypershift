@@ -7,6 +7,6 @@ metadata:
     argocd.argoproj.io/sync-wave: "-10"
 data:
 {{- range $k, $v := .Values.ackS3 }}
-  {{ $k | upper }}: {{ $v }}
+  {{ $k | upper }}: {{ $v | quote}}
 {{- end }}
-  AWS_REGION: {{ $.Values.s3.region }}
+  AWS_REGION: {{ $.Values.s3.region | quote}}
