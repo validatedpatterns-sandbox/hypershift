@@ -7,9 +7,8 @@ hcp:
 s3:
   region: us-west-2
   bucketName: hypershifttest-hcp #default-bucket-hcp
-  
-createBucketPolicy: true
-additionalTags: []
+  createBucketPolicy: true
+  additionalTags: []
 
 # Parameters for the imagestream
 imagestream:

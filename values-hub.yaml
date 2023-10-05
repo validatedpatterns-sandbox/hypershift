@@ -9,7 +9,7 @@ clusterGroup:
     - vault
     - golang-external-secrets
     - multicluster-engine
-#    - ack-system
+    - ack-system
 
   subscriptions:
     mce:
@@ -17,16 +17,16 @@ clusterGroup:
       namespace: multicluster-engine
       channel: stable-2.3
     
-#    s3:
-#      name: ack-s3-controller
-#      namespace: ack-system
-#      channel: alpha
-#      source: community-operators
+    s3:
+      name: ack-s3-controller
+      namespace: ack-system
+      channel: alpha
+      source: community-operators
 
   projects:
     - hub
     - hypershift
-#    - s3
+    - s3
 
   applications:
     vault:

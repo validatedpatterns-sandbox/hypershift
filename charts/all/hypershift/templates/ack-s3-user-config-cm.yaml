@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ack-s3-user-config
+  namespace: ack-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
+data:
+{{- range $k, $v := .Values.ackS3 }}
+  aws_region: {{ .Values.s3.region }}
+  {{ $k | upper }}: {{ $v }}
+{{- end }}
