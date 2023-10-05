@@ -1,8 +1,6 @@
 apiVersion: s3.services.k8s.aws/v1alpha1
 kind: Bucket
 metadata:
-  finalizers:
-  - finalizers.s3.services.k8s.aws/Bucket
   labels:
 {{- if (gt (len .Values.s3.additionalTags) 0) -}}
   {{- range $key, $value := .Values.s3.additionalTags }}

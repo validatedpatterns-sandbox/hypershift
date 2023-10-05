@@ -11,5 +11,5 @@ data:
 {{- end }}
   AWS_REGION: {{ $.Values.s3.region | quote}}
   ACK_WATCH_NAMESPACE:
-  ACK_ENDPOINT_URL:
+  AWS_ENDPOINT_URL:
   LEADER_ELECTION_NAMESPACE:

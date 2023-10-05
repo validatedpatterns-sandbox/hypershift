@@ -3,28 +3,11 @@
 # Declare variables to be passed into your templates.
 useExternalSecrets: true
 
-hcp:
-  serviceAccount: hcp-sa
-
 s3:
   region: us-west-2
   bucketName: default-bucket-hcp
   createBucketPolicy: true
   additionalTags: []
-
-# Parameters for the imagestream
-imagestream:
-  sourceImage: image-registry.openshift-image-registry.svc:5000/openshift/cli
-  tag: latest
-
-# Parameters for the buildconfig
-buildconfig:
-  git:
-    uri: https://github.com/validatedpatterns-sandbox/hypershift
-    ref: hypershift-mce
-    contextDir: containerfiles
-  dockerfilePath: Containerfile
-  triggers: ConfigChange
 
 ackS3:
   ack_enable_development_logging: true
@@ -46,7 +29,3 @@ secretStore:
 # Secret provisioned for the AWS Controller for Kubernetes - S3 
 ackCredentials:
   key: secret/data/hub/aws
-
-# Secret provisioned for the HyperShift installation 
-awsCredentials:
-  key: secret/data/hub/awsCreds
