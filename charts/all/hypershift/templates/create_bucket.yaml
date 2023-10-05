@@ -11,6 +11,8 @@ metadata:
 {{- end }}
   name: {{ .Values.s3.bucketName }}
   namespace: {{ .Values.s3.bucketNamespace | default "ack-system" }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
 spec:
   name: {{ .Values.s3.bucketName }}
 {{- if eq .Values.s3.createBucketPolicy true | default true }}
