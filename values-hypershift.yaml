@@ -1,0 +1,12 @@
+# Override values for HyperShift 
+global:
+  useExternalSecrets: true
+  s3:
+    createBucket:
+    region: 
+    bucketName: 
+    additionalTags: []
+  
+  buildconfig:
+    git:
+      uri: https://github.com/validatedpatterns-sandbox/hypershift
