@@ -2,10 +2,12 @@
 global:
   useExternalSecrets: true
   s3:
-    createBucket:
-    region: 
-    bucketName: 
-    additionalTags: []
+    createBucket: true
+    region: us-west-1
+    bucketName: jrickard-hcp-demo
+    additionalTags:
+      owner: jrickard
+      destroy: true
   
   buildconfig:
     git:
