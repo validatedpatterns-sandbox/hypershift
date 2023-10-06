@@ -3,9 +3,6 @@
 # Declare variables to be passed into your templates.
 useExternalSecrets: true
 
-hcp:
-  serviceAccount: hcp-sa
-
 s3:
   region: us-west-2
   bucketName: default-bucket-hcp
@@ -21,16 +18,9 @@ imagestream:
 buildconfig:
   git:
     uri: https://github.com/validatedpatterns-sandbox/hypershift
-    ref: hypershift-mce
     contextDir: containerfiles
   dockerfilePath: Containerfile
   triggers: ConfigChange
-
-ackS3:
-  ack_enable_development_logging: true
-  ack_log_level: debug
-  ack_resource_tags: acktagged
-  enable_leader_election: true
 
 global:
   hubClusterDomain: hub.example.com
@@ -42,10 +32,6 @@ clusterGroup:
 secretStore:
   name: vault-backend
   kind: ClusterSecretStore
-
-# Secret provisioned for the AWS Controller for Kubernetes - S3 
-ackCredentials:
-  key: secret/data/hub/aws
 
 # Secret provisioned for the HyperShift installation 
 awsCredentials:

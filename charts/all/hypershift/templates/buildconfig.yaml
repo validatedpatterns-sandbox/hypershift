@@ -9,8 +9,7 @@ spec:
   source:
     type: Git
     git:
-      uri: {{ .Values.buildconfig.git.uri }}
-      ref: {{ .Values.buildconfig.git.ref | default "main" }}
+      uri: {{ coalesce .Values.global.buildconfig.git.uri .Values.buildconfig.git.uri "https://github.com/validatedpatterns-sandbox/hypershift" }}
     contextDir: {{ .Values.buildconfig.git.contextDir }}
   strategy:
     type: Docker
