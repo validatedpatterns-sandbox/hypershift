@@ -4,8 +4,8 @@
 useExternalSecrets: true
 
 s3:
-  region: us-west-2
-  bucketName: default-bucket-hcp
+  region: 
+  bucketName: 
   createBucketPolicy: true
   additionalTags: []
 
