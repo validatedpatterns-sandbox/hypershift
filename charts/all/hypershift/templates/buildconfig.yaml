@@ -1,7 +1,7 @@
 kind: BuildConfig
 apiVersion: build.openshift.io/v1
 metadata:
-  name: hcp-cli-bc
+  name: hypershift-bc
   namespace: multicluster-engine
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -9,17 +9,16 @@ spec:
   source:
     type: Git
     git:
-      uri: {{ .Values.buildconfig.git.uri }}
-      ref: {{ .Values.buildconfig.git.ref | default "main" }}
-    contextDir: {{ .Values.buildconfig.git.contextDir }}
+      uri: {{ .Values.global.buildconfig.git.uri }}
+    contextDir: {{ .Values.global.buildconfig.git.contextDir }}
   strategy:
     type: Docker
     dockerStrategy:
-      dockerfilePath: {{ .Values.buildconfig.dockerfilePath | default "Containerfile" }}
+      dockerfilePath: {{ .Values.global.buildconfig.dockerfilePath | default "Containerfile" }}
   triggers:
     - type: ConfigChange
   output:
     to:
       kind: ImageStreamTag
-      name: hcp-cli:{{ .Values.imagestream.tag | default "latest"}}
+      name: hypershift:{{ .Values.global.imagestream.tag | default "latest"}}
 

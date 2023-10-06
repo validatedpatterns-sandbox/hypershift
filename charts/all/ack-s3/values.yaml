@@ -1,27 +1,10 @@
-# Default values for ack-s3 controller.
+# Default values for AWS S3 Controller.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-useExternalSecrets: true
-
-s3:
-  region: us-west-2
-  bucketName: default-bucket-hcp
-  createBucketPolicy: true
-  additionalTags: []
-
-ackS3:
-  ack_enable_development_logging: true
-  ack_log_level: debug
-  ack_resource_tags: acktagged
-  enable_leader_election: true
-
-global:
-  hubClusterDomain: hub.example.com
-  localClusterDomain: region-one.example.com
-
 clusterGroup:
   isHubCluster: true
 
+# Reference the Hashicorp Vault backend for ESO
 secretStore:
   name: vault-backend
   kind: ClusterSecretStore
@@ -29,3 +12,28 @@ secretStore:
 # Secret provisioned for the AWS Controller for Kubernetes - S3 
 ackCredentials:
   key: secret/data/hub/aws
+
+# Begin global parameters
+global:
+  hubClusterDomain: hub.example.com
+  localClusterDomain: region-one.example.com
+
+# Provision External Secret resources: default true
+  useExternalSecrets: true
+
+# S3 bucket logistical information
+  s3:
+    createBucket: true
+    region: 
+    bucketName: 
+    createBucketPolicy: true
+    additionalTags: []
+
+# End global parameters
+
+# Default parameters for the ACK S3 Controller
+ackS3:
+  ack_enable_development_logging: true
+  ack_log_level: debug
+  ack_resource_tags: acktagged
+  enable_leader_election: true
