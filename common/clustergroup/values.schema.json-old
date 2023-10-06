@@ -518,10 +518,7 @@
         },
         "namespace": {
           "type": "string",
-          "default": "imperative",
-          "enum": [
-            "imperative"
-          ]
+          "default": "imperative"
         },
         "serviceAccountCreate": {
           "type": "boolean"
