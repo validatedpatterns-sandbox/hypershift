@@ -1,3 +1,4 @@
+{{- if .Values.global.useExternalSecrets }}
 ---
 apiVersion: "external-secrets.io/v1beta1"
 kind: ExternalSecret
@@ -17,8 +18,9 @@ spec:
       mergePolicy: Merge
       type: Opaque
       data:
-        region: {{ .Values.global.s3.region | default .Values.s3.region  }}
-        bucket: {{ .Values.global.s3.bucketName | default .Values.s3.bucketName }}
+        region: {{ .Values.global.s3.region }}
+        bucket: {{ .Values.global.s3.bucketName }}
   dataFrom:
   - extract:
       key: {{ .Values.awsCredentials.key }}
+{{- end }}
