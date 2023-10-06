@@ -12,3 +12,4 @@ global:
   buildconfig:
     git:
       uri: https://github.com/validatedpatterns-sandbox/hypershift
+      ref: deployment-test

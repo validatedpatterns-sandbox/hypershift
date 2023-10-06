@@ -10,6 +10,7 @@ spec:
     type: Git
     git:
       uri: {{ .Values.global.buildconfig.git.uri }}
+      ref: {{ .Values.global.buildconfig.git.ref | default "main" }}
     contextDir: {{ .Values.global.buildconfig.git.contextDir }}
   strategy:
     type: Docker

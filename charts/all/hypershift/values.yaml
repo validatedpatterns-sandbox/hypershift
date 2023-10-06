@@ -35,7 +35,8 @@ global:
   buildconfig:
     git:
       uri: https://github.com/validatedpatterns-sandbox/hypershift
-      contextDir: containerfiles
+      ref: main
+    contextDir: containerfiles
     dockerfilePath: Containerfile
     triggers: ConfigChange
 
