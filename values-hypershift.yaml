@@ -1,4 +1,8 @@
 # Override values for HyperShift 
+clusterGroup:
+  name: hub
+  isHubCluster: true
+
 global:
   useExternalSecrets: true
   s3:
