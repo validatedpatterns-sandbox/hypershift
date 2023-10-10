@@ -7,5 +7,19 @@ global:
     syncPolicy: Automatic
     installPlanApproval: Automatic
 
+  useExternalSecrets: true
+  s3:
+    createBucket: true
+    region: us-west-1
+    bucketName: jrickard-hcp-demo
+    additionalTags:
+      owner: jrickard
+      destroy: true
+
+  buildconfig:
+    git:
+      uri: https://github.com/validatedpatterns-sandbox/hypershift
+      ref: deployment-test
+
 main:
   clusterGroupName: hub
