@@ -2,9 +2,6 @@
 global:
   pattern: hypershift
 
-  sharedValueFiles:
-   - ./values-hypershift.yaml
-
   options:
     useCSV: false
     syncPolicy: Automatic

@@ -1,6 +1,8 @@
 clusterGroup:
   name: hub
   isHubCluster: true
+  sharedValueFiles:
+    - /values-hypershift.yaml
 
   operatorgroupExcludes:
     - ack-system
