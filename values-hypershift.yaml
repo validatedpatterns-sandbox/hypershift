@@ -3,13 +3,11 @@ global:
   useExternalSecrets: true
   s3:
     createBucket: true
-    region: us-west-1
-    bucketName: jrickard-hcp-demo
-    additionalTags:
-      owner: jrickard
-      destroy: true
+    region: 
+    bucketName: 
+    additionalTags: 
   
   buildconfig:
     git:
-      uri: https://github.com/validatedpatterns-sandbox/hypershift
-      ref: hypershift
+      uri: 
+      ref:

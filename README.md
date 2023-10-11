@@ -35,7 +35,7 @@ To get started you will need to fork & clone this repository:
 
 - `cd hypershift`
 
-- `vim values-global.yaml`
+- `vim values-hypershift.yaml`
 
 - `git commit & push your changes`
 
@@ -47,10 +47,10 @@ To get started you will need to fork & clone this repository:
 | createBucket | true | This provisions the s3 bucket to be used by hypershift |
 | region | `<n/a>` | Define the region that you want your s3 bucket created in |
 | bucketName | `<n/a>` | Define the name of your bucket - must be DNS compatible (no `_'s` or special characters) |
-| additionalTags | `<n/a>` | Create a list of tags to be added to the bucket in `key: value` format|
+| additionalTags | `<n/a>` | Create a map of tags to be added to the bucket in `key: value` format|
 | buildConfig.git.uri | `<n/a>` | This should be the url to your git repository |
 
-An example `values-global.yaml` that has been completed:
+An example `values-hypershift.yaml` that has been completed:
 
 ```yaml
 global:
