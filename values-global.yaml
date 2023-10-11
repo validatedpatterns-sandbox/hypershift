@@ -3,7 +3,7 @@ global:
   pattern: hypershift
 
   sharedValueFiles:
-   - /values-hypershift.yaml
+   - ./values-hypershift.yaml
 
   options:
     useCSV: false
