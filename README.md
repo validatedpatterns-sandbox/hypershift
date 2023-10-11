@@ -35,7 +35,7 @@ To get started you will need to fork & clone this repository:
 
 - `cd hypershift`
 
-- `vim values-hypershift.yaml`
+- `vim values-global.yaml`
 
 - `git commit & push your changes`
 
@@ -50,7 +50,7 @@ To get started you will need to fork & clone this repository:
 | additionalTags | `<n/a>` | Create a list of tags to be added to the bucket in `key: value` format|
 | buildConfig.git.uri | `<n/a>` | This should be the url to your git repository |
 
-An example `values-hypershift.yaml` that has been completed:
+An example `values-global.yaml` that has been completed:
 
 ```yaml
 global:
