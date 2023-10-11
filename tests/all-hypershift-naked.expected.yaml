@@ -12,6 +12,7 @@ spec:
     type: Git
     git:
       uri: https://github.com/validatedpatterns-sandbox/hypershift
+      ref: main
     contextDir: containerfiles
   strategy:
     type: Docker
