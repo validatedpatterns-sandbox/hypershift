@@ -3,11 +3,13 @@ global:
   useExternalSecrets: true
   s3:
     createBucket: true
-    region: 
-    bucketName: 
+    region: us-west-2
+    bucketName: jrickard-deploytest
     additionalTags: 
+      owner: jrickard
+      destroy: true
   
   buildconfig:
     git:
-      uri: 
-      ref:
+      uri: https://github.com/validatedpatterns-sandbox/hypershift
+      ref: hypershift
