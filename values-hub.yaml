@@ -18,7 +18,7 @@ clusterGroup:
     mce:
       name: multicluster-engine
       namespace: multicluster-engine
-      channel: stable-2.3
+      channel: stable-2.5
     
     s3:
       name: ack-s3-controller
