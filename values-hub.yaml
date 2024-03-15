@@ -30,6 +30,13 @@ clusterGroup:
     - hypershift
     - s3
 
+  letsencrypt:
+    region: us-east-2 # region of the cluster
+    server: https://acme-v02.api.letsencrypt.org/directory
+    # staging URL
+    # server: https://acme-staging-v02.api.letsencrypt.org/directory
+    email: team-vp@ragtagrobot.com
+
   # This kind of variable substitution will work with any of the variables the Validated Patterns operator knows
   # about and sets, so this is also possible, for example:
   #   - '/overrides/values-{{ $.Values.global.hubClusterDomain }}.yaml'
@@ -46,13 +53,23 @@ clusterGroup:
       project: hub
       path: common/golang-external-secrets
 
+
+    applications:
+      letsencrypt:
+        name: letsencrypt
+        namespace: letsencrypt
+        project: default
+        path: common/letsencrypt
+
     hypershift:
+      disabled: true
       name: hypershift
       namespace: multicluster-engine
       project: hypershift
       path: charts/all/hypershift
 
     s3:
+      disabled: true
       name: s3-controller
       namespace: ack-system
       project: s3
