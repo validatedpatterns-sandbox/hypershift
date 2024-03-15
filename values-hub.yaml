@@ -1,3 +1,10 @@
+letsencrypt:
+  region: us-east-2 # region of the cluster
+  server: https://acme-v02.api.letsencrypt.org/directory
+  # staging URL
+  # server: https://acme-staging-v02.api.letsencrypt.org/directory
+  email: team-vp@ragtagrobot.com
+
 clusterGroup:
   name: hub
   isHubCluster: true
@@ -29,13 +36,6 @@ clusterGroup:
     - hub
     - hypershift
     - s3
-
-  letsencrypt:
-    region: us-east-2 # region of the cluster
-    server: https://acme-v02.api.letsencrypt.org/directory
-    # staging URL
-    # server: https://acme-staging-v02.api.letsencrypt.org/directory
-    email: team-vp@ragtagrobot.com
 
   # This kind of variable substitution will work with any of the variables the Validated Patterns operator knows
   # about and sets, so this is also possible, for example:
