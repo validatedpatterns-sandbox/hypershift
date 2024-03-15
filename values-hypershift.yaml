@@ -2,7 +2,7 @@
 global:
   s3:
     createBucket: true
-    region: 
-    bucketName: 
+    region: us-east-2
+    bucketName: vp-hypershift-state
     additionalTags: 
       lifecycle: keep
