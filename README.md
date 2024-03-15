@@ -43,7 +43,6 @@ To get started you will need to fork & clone this repository:
 
 |Parameter | Default (if defined) | Purpose |
 |----------|----------------------|---------|
-|useExternalSecrets| true | When using the patterns framework this should be true. This will provision the necessary secrets for you using eso|
 | createBucket | true | This provisions the s3 bucket to be used by hypershift |
 | region | `<n/a>` | Define the region that you want your s3 bucket created in |
 | bucketName | `<n/a>` | Define the name of your bucket - must be DNS compatible (no `_'s` or special characters) |
@@ -54,7 +53,6 @@ An example `values-hypershift.yaml` that has been completed:
 
 ```yaml
 global:
-  useExternalSecrets: true
   s3:
     createBucket: true
     region: us-west-1

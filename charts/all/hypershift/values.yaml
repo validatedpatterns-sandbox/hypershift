@@ -18,9 +18,6 @@ global:
   hubClusterDomain: hub.example.com
   localClusterDomain: region-one.example.com
 
-# Provision External Secret resources: default true
-  useExternalSecrets: true
-
 # S3 bucket information
   s3:
     region: 
