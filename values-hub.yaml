@@ -55,7 +55,7 @@ clusterGroup:
       path: charts/all/hypershift
 
     s3:
-      disabled: true
+      disabled: false
       name: s3-controller
       namespace: ack-system
       project: s3
