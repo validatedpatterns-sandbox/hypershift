@@ -53,14 +53,6 @@ clusterGroup:
       project: hub
       path: common/golang-external-secrets
 
-
-    applications:
-      letsencrypt:
-        name: letsencrypt
-        namespace: letsencrypt
-        project: default
-        path: common/letsencrypt
-
     hypershift:
       disabled: true
       name: hypershift
