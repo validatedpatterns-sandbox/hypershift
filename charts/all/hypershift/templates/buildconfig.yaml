@@ -9,8 +9,8 @@ spec:
   source:
     type: Git
     git:
-      uri: {{ .Values.global.buildconfig.git.uri }}
-      ref: {{ .Values.global.buildconfig.git.ref | default "main" }}
+      uri: {{ .Values.global.repoURL }}
+      ref: {{ .Values.global.targetRevision }}
     contextDir: {{ .Values.global.buildconfig.contextDir }}
   strategy:
     type: Docker

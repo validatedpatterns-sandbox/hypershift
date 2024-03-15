@@ -1,8 +1,6 @@
 # Default values for hypershift.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-clusterGroup:
-  isHubCluster: true
 
 # Reference the Hashicorp Vault backend for ESO
 secretStore:
@@ -15,8 +13,6 @@ awsCredentials:
 
 # Begin global parameters
 global:
-  hubClusterDomain: hub.example.com
-  localClusterDomain: region-one.example.com
 
 # S3 bucket information
   s3:
@@ -30,9 +26,6 @@ global:
 
 # Parameters for the buildconfig
   buildconfig:
-    git:
-      uri: https://github.com/validatedpatterns-sandbox/hypershift
-      ref: main
     contextDir: containerfiles
     dockerfilePath: Containerfile
     triggers: ConfigChange

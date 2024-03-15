@@ -47,7 +47,6 @@ To get started you will need to fork & clone this repository:
 | region | `<n/a>` | Define the region that you want your s3 bucket created in |
 | bucketName | `<n/a>` | Define the name of your bucket - must be DNS compatible (no `_'s` or special characters) |
 | additionalTags | `<n/a>` | Create a map of tags to be added to the bucket in `key: value` format|
-| buildConfig.git.uri | `<n/a>` | This should be the url to your git repository |
 
 An example `values-hypershift.yaml` that has been completed:
 
@@ -61,9 +60,6 @@ global:
       bucketOwner: jrickard
       lifecycle: keep
   
-  buildconfig:
-    git:
-      uri: https://github.com/validatedpatterns-sandbox/hypershift
 ```
 
 **NOTE** 

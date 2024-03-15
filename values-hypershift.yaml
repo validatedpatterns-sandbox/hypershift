@@ -5,8 +5,4 @@ global:
     region: 
     bucketName: 
     additionalTags: 
-  
-  buildconfig:
-    git:
-      uri: 
-      ref:
+      lifecycle: keep

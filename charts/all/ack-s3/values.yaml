@@ -1,8 +1,6 @@
 # Default values for AWS S3 Controller.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-clusterGroup:
-  isHubCluster: true
 
 # Reference the Hashicorp Vault backend for ESO
 secretStore:
@@ -15,8 +13,6 @@ ackCredentials:
 
 # Begin global parameters
 global:
-  hubClusterDomain: hub.example.com
-  localClusterDomain: region-one.example.com
 
 # S3 bucket logistical information
   s3:
