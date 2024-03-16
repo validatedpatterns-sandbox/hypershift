@@ -2,7 +2,7 @@
 apiVersion: "external-secrets.io/v1beta1"
 kind: ExternalSecret
 metadata:
-  name: {{ .Values.oauthSecretiName }}
+  name: {{ .Values.oauthSecretName }}
   namespace: openshift-config
   annotations:
     argocd.argoproj.io/sync-wave: '5'
