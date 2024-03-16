@@ -9,7 +9,7 @@ spec:
       clientSecret:
         name: {{ .Values.oauthSecretName }}
       organizations:
-{{- range .Values.orgs }}
+{{- range .Values.github.orgs }}
       - {{ .name }}
 {{- end }}
     mappingMethod: claim
