@@ -16,7 +16,7 @@ spec:
     remoteRef:
       key {{ default "secret/data/hub/oauthCreds" .Values.clientSecretKeyPath }}
   target:
-    name: {{ .Values.oauthSecretiName }}
+    name: {{ .Values.oauthSecretName }}
     creationPolicy: Owner
     template:
       mergePolicy: Merge
