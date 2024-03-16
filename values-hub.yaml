@@ -61,6 +61,12 @@ clusterGroup:
       project: s3
       path: charts/all/ack-s3
 
+    oauth:
+      name: oauth
+      namespace: openshift-config
+      project: hub
+      path: charts/all/oauth
+
   imperative:
     # NOTE: We *must* use lists and not hashes. As hashes lose ordering once parsed by helm
     # The default schedule is every 10 minutes: imperative.schedule
