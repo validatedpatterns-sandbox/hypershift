@@ -15,6 +15,7 @@ spec:
   - secretKey: clientSecret
     remoteRef:
       key: {{ default "secret/data/hub/oauthCreds" .Values.clientSecretKeyPath }}
+      property: content
   target:
     name: {{ .Values.oauthSecretName }}
     creationPolicy: Owner
