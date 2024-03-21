@@ -16,4 +16,4 @@ oauthSecretName: ocp-github-oauth
 github:
   accessKey: a2f32e0b1d39c9b6098b
   orgs:
-  - name: hybrid-cloud-patterns
+  - name: validatedpatterns
