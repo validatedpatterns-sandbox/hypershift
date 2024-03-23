@@ -62,6 +62,7 @@ clusterGroup:
       path: charts/all/ack-s3
 
     oauth:
+      disabled: false
       name: oauth
       namespace: openshift-config
       project: hub

@@ -10,7 +10,7 @@ letsencrypt:
 clusterGroup:
   applications:
     letsencrypt:
-      disabled: true
+      disabled: false
       name: letsencrypt
       namespace: letsencrypt
       project: default
