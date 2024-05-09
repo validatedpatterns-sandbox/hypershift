@@ -1,0 +1,47 @@
+---
+# Source: github-oauth/templates/eso-github-oauth.yaml
+apiVersion: "external-secrets.io/v1beta1"
+kind: ExternalSecret
+metadata:
+  name: 
+  namespace: openshift-config
+  annotations:
+    argocd.argoproj.io/sync-wave: '5'
+spec:
+  refreshInterval: 15s
+  secretStoreRef:
+    name: vault-backend
+    kind: ClusterSecretStore
+  data:
+  - secretKey: clientSecret
+    remoteRef:
+      key: secret/data/hub/oauthCreds
+      property: content
+  target:
+    name: 
+    creationPolicy: Owner
+    template:
+      type: Opaque
+      mergePolicy: Merge
+      data:
+        clientSecret: |-
+          {{ .clientSecret | trim }}
+---
+# Source: github-oauth/templates/oauth.yaml
+apiVersion: config.openshift.io/v1
+kind: OAuth
+metadata:
+  name: cluster
+spec:
+  identityProviders:
+  - github:
+      clientID: 
+      clientSecret:
+        name: 
+      organizations:
+      - 
+    mappingMethod: claim
+    name: github
+    type: GitHub
+  tokenConfig:
+    accessTokenMaxAgeSeconds: 62208000
