@@ -37,3 +37,4 @@ ackS3:
   ack_log_level: debug
   ack_resource_tags: acktagged
   enable_leader_election: true
+  reconcile_default_max_concurrent_syncs: 1
