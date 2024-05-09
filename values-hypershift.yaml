@@ -1,13 +1,40 @@
 # Override values for HyperShift 
+# Optional: For the pattern to create the s3 bucket - uncomment the resources
+# under clusterGroup.
+
+#clusterGroup:
+#  namespaces:
+#    - ack-system
+#  operatorgroupExcludes:
+#    - ack-system
+#  subscriptions:
+#    s3:
+#      name: ack-s3-controller
+#      namespace: ack-system
+#      channel: alpha
+#      source: community-operators
+#  projects:
+#    - s3
+#  applications:
+#    s3:
+#      disabled: true
+#      name: s3-controller
+#      namespace: ack-system
+#      project: s3
+#      path: charts/all/ack-s3
+      
+# Define the s3 bucket information  
 global:
-  useExternalSecrets: true
   s3:
+    # Should the pattern create the s3 bucket(true), or bring your own (false). 
     createBucket: true
-    region: 
-    bucketName: 
+
+    # What region should the bucket be created in.
+    region: ''
+
+    # Enter the name of your bucket (bucket names are globally unique)
+    bucketName: ''
+
+    # Any additional tags to add to a bucket created by the pattern
     additionalTags: 
-  
-  buildconfig:
-    git:
-      uri: 
-      ref:
+      lifecycle: keep

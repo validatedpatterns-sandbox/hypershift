@@ -4,31 +4,20 @@ clusterGroup:
   sharedValueFiles:
     - /values-hypershift.yaml
 
-  operatorgroupExcludes:
-    - ack-system
-
   namespaces:
     - vault
     - golang-external-secrets
     - multicluster-engine
-    - ack-system
 
   subscriptions:
     mce:
       name: multicluster-engine
       namespace: multicluster-engine
-      channel: stable-2.3
+      channel: stable-2.5
     
-    s3:
-      name: ack-s3-controller
-      namespace: ack-system
-      channel: alpha
-      source: community-operators
-
   projects:
     - hub
     - hypershift
-    - s3
 
   applications:
     vault:
@@ -44,16 +33,18 @@ clusterGroup:
       path: common/golang-external-secrets
 
     hypershift:
+      disabled: false
       name: hypershift
       namespace: multicluster-engine
       project: hypershift
       path: charts/all/hypershift
 
-    s3:
-      name: s3-controller
-      namespace: ack-system
-      project: s3
-      path: charts/all/ack-s3
+    oauth:
+      disabled: false
+      name: oauth
+      namespace: openshift-config
+      project: hub
+      path: charts/all/oauth
 
   imperative:
     # NOTE: We *must* use lists and not hashes. As hashes lose ordering once parsed by helm
