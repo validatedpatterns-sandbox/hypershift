@@ -1,0 +1,27 @@
+---
+apiVersion: "external-secrets.io/v1beta1"
+kind: ExternalSecret
+metadata:
+  name: {{ .Values.global.oauth.secretName }}
+  namespace: openshift-config
+  annotations:
+    argocd.argoproj.io/sync-wave: '5'
+spec:
+  refreshInterval: 15s
+  secretStoreRef:
+    name: {{ .Values.secretStore.name }}
+    kind: {{ .Values.secretStore.kind }}
+  data:
+  - secretKey: clientSecret
+    remoteRef:
+      key: {{ default "secret/data/hub/oauthCreds" .Values.clientSecretKeyPath }}
+      property: content
+  target:
+    name: {{ .Values.global.oauth.secretName }}
+    creationPolicy: Owner
+    template:
+      type: Opaque
+      mergePolicy: Merge
+      data:
+        clientSecret: |-
+          {{ "{{ .clientSecret | trim }}" }}
