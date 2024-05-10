@@ -100,9 +100,11 @@ spec:
     - enabled: true
       name: hypershift-local-hosting
     - enabled: true
-      name: managedserviceaccount-preview
+      name: managedserviceaccount
     - enabled: true
-      name: hypershift-preview
+      name: hypershift
     - enabled: true
       name: console-mce
+    - enabled: false
+      name: image-based-install-operator-preview
   targetNamespace: multicluster-engine

@@ -1,5 +1,0 @@
-- name: HyperShift Config
-  hosts: localhost
-  connection: local
-  roles:
-    - hypershift

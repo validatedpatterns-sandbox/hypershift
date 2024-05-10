@@ -1,0 +1,20 @@
+apiVersion: config.openshift.io/v1
+kind: OAuth
+metadata:
+  name: cluster
+spec:
+  identityProviders:
+  - github:
+      clientID: {{ .Values.global.oauth.github.clientID }}
+      clientSecret:
+        name: {{ .Values.global.oauth.secretName }}
+      organizations:
+{{- range .Values.global.oauth.github.orgs }}
+      - {{ .name }}
+{{- end }}
+    mappingMethod: claim
+    name: github
+    type: GitHub
+  tokenConfig:
+    accessTokenMaxAgeSeconds: 62208000
+

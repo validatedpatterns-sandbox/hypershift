@@ -1,13 +1,16 @@
 # Override values for HyperShift 
+# Define the s3 bucket information  
 global:
-  useExternalSecrets: true
   s3:
+    # Should the pattern create the s3 bucket(true), or bring your own (false). 
     createBucket: true
-    region: 
-    bucketName: 
+
+    # What region should the bucket be created in.
+    region: ''
+
+    # Enter the name of your bucket (bucket names are globally unique)
+    bucketName: ''
+
+    # Any additional tags to add to a bucket created by the pattern
     additionalTags: 
-  
-  buildconfig:
-    git:
-      uri: 
-      ref:
+      lifecycle: keep

@@ -1,0 +1,23 @@
+# Default values for hypershift.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Reference the Hashicorp Vault backend for ESO
+secretStore:
+  name: vault-backend
+  kind: ClusterSecretStore
+
+# Follow the instructions for registering a GitHub application at:
+#   https://docs.openshift.com/container-platform/4.13/authentication/identity_providers/configuring-github-identity-provider.html#identity-provider-registering-github_configuring-github-identity-provider
+# Then update the GitHub accessKey, populate the vault with the secret, and update the list of org names
+#
+global:
+  oauth:
+    enabled: #True to enable the customization of oauth, false to use cluster deployed
+    secretName: #Name of the secret to be generated with appropriate credentials
+    type: #GitHub, HTPasswd
+# if GitHub provide the following values
+    github:
+      clientID: #retrieve from github oauth application
+      orgs:
+      - name: #list of organization names that are authorized with oauth
