@@ -5,7 +5,7 @@ global:
     # Should the pattern create the s3 bucket(true), or bring your own (false). 
     createBucket: true
 
-    # What region should the bucket be created in.
+    # What region should the bucket be created in, or where does it exist
     region: ''
 
     # Enter the name of your bucket (bucket names are globally unique)
