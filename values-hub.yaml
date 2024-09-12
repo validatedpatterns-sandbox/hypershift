@@ -10,25 +10,25 @@ clusterGroup:
     - multicluster-engine
     - ack-system
 
-  operatorgroupExcludes:
-    - ack-system
+#  operatorgroupExcludes:
+#    - ack-system
 
   subscriptions:
     mce:
       name: multicluster-engine
       namespace: multicluster-engine
-      channel: stable-2.5
+      channel: stable-2.6
     
-    s3:
-      name: ack-s3-controller
-      namespace: ack-system
-      channel: alpha
-      source: community-operators
+#    s3:
+#      name: ack-s3-controller
+#      namespace: ack-system
+#      channel: alpha
+#      source: community-operators
     
   projects:
     - hub
     - hypershift
-    - s3
+#    - s3
 
   applications:
     vault:
@@ -58,7 +58,7 @@ clusterGroup:
       path: charts/all/oauth
 
     s3:
-      disabled: false
+      disabled: true
       name: s3-controller
       namespace: ack-system
       project: s3
