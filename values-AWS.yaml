@@ -1,4 +1,4 @@
-letsencrypt:
+#letsencrypt:
 # region can be the empty string unless AccessKeyID and SecretAccessKeyID are not set (which we ensure is never true)
 # Otherwise, set to the region of the cluster, eg. us-east-1
   # region: us-east-2
