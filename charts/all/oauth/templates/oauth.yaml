@@ -12,6 +12,12 @@ spec:
 {{- range .Values.global.oauth.github.orgs }}
       - {{ .name }}
 {{- end }}
+{{- if .Values.global.oauth.github.teams }}
+      teams:
+{{- range .Values.global.oauth.github.teams }}
+      - {{ .name }}
+{{- end }}
+{{- end }}
     mappingMethod: claim
     name: github
     type: GitHub

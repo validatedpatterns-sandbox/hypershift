@@ -18,6 +18,8 @@ global:
 #      clientID: #clientID of the registered GitHub oAuth Application 
 #      orgs:
 #      - name: #list of github authorized organizations
+#      teams:
+#      - name: #list of github authorized teams
 
 main:
   clusterGroupName: hub

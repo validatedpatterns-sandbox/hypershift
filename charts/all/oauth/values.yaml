@@ -21,3 +21,5 @@ global:
       clientID: #retrieve from github oauth application
       orgs:
       - name: #list of organization names that are authorized with oauth
+      teams:
+      - name: #list of team names that are authorized with oauth
