@@ -8,11 +8,12 @@ spec:
       clientID: {{ .Values.global.oauth.github.clientID }}
       clientSecret:
         name: {{ .Values.global.oauth.secretName }}
+{{- if .Values.global.oauth.github.orgs }}
       organizations:
 {{- range .Values.global.oauth.github.orgs }}
       - {{ .name }}
 {{- end }}
-{{- if .Values.global.oauth.github.teams }}
+{{- else }}
       teams:
 {{- range .Values.global.oauth.github.teams }}
       - {{ .name }}

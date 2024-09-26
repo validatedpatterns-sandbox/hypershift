@@ -17,9 +17,10 @@ global:
     secretName: #Name of the secret to be generated with appropriate credentials
     type: #GitHub, HTPasswd
 # if GitHub provide the following values
+# When configuring the oauth client in the cluster you must choose either orgs or teams to filter on
     github:
       clientID: #retrieve from github oauth application
-      orgs:
-      - name: #list of organization names that are authorized with oauth
-      teams:
-      - name: #list of team names that are authorized with oauth
+      #orgs:
+      #- name: #list of organization names that are authorized with oauth
+      #teams:
+      #- name: #list of team names that are authorized with oauth
