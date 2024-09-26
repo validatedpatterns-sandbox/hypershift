@@ -8,6 +8,7 @@ clusterGroup:
     - vault
     - golang-external-secrets
     - multicluster-engine
+    - group-sync-operator
     #- ack-system
 
   operatorgroupExcludes:
@@ -19,6 +20,12 @@ clusterGroup:
       namespace: multicluster-engine
       channel: stable-2.6
     
+    group-sync-operator:
+      name: group-sync-operator
+      namespace: group-sync-operator
+      channel: alpha
+      source: community-operators
+
 #    s3:
 #      name: ack-s3-controller
 #      namespace: ack-system
