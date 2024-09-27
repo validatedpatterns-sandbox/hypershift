@@ -11,13 +11,12 @@ global:
 # configure oauth provider: https://docs.openshift.com/container-platform/4.15/authentication/understanding-identity-provider.html
 #
 # must decide between orgs or teams when configuring cluster oauth
-#
   oauth:
     enabled: true
     type: GitHub
     secretName: ocp-github-oauth
     github:
-      clientID: a2f32e0b1d39c9b6098b
+      clientID: Ov23liLPJmP3mVcvNLjn
       orgs:
       - name: validatedpatterns
 
