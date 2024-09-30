@@ -12,13 +12,7 @@ rbac:
   roleBinding:
     name: hcp-admins-crb
 # Provide a list of users to add to the clusterrolebinding
-  users:
-  - day0hero
-  - mbaldessari
-  - beekhof
-  - darkdoc
-  - claudiol
-  - mhjacks
+  users: []
 
 clusterGroup:
   isHubCluster: true
