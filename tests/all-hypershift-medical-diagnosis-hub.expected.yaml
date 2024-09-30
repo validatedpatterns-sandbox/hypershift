@@ -70,30 +70,6 @@ roleRef:
   kind: ClusterRole
   name: hcp-admins-crole
 subjects:
-- apiGroup: rbac.authorization.k8s.io
-  kind: User
-  name: day0hero
-- apiGroup: rbac.authorization.k8s.io
-  kind: User
-  name: mbaldessari
-- apiGroup: rbac.authorization.k8s.io
-  kind: User
-  name: beekhof
-- apiGroup: rbac.authorization.k8s.io
-  kind: User
-  name: darkdoc
-- apiGroup: rbac.authorization.k8s.io
-  kind: User
-  name: claudiol
-- apiGroup: rbac.authorization.k8s.io
-  kind: User
-  name: mhjacks
-- apiGroup: rbac.authorization.k8s.io
-  kind: User
-  name: mlabonte-rh
-- apiGroup: rbac.authorization.k8s.io
-  kind: User
-  name: yukinchan
 ---
 # Source: hypershift/templates/eso-hypershift-aws.yaml
 apiVersion: "external-secrets.io/v1beta1"

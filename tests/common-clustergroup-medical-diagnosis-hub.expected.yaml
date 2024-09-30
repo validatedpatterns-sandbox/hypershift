@@ -329,17 +329,6 @@ data:
         revision: main
       multiSourceConfig:
         enabled: true
-    rbac:
-      create: true
-      users:
-      - day0hero
-      - mbaldessari
-      - beekhof
-      - darkdoc
-      - claudiol
-      - mhjacks
-      - mlabonte-rh
-      - yukinchan
     secretStore:
       kind: ClusterSecretStore
       name: vault-backend
