@@ -14,3 +14,9 @@ global:
     # Any additional tags to add to a bucket created by the pattern
     additionalTags: 
       lifecycle: keep
+
+# Set rbac.create to false if you want to skip creation of role/rolebinding.
+rbac:
+  create: false
+# Provide a list of users to add to the clusterrolebinding
+  users: []
