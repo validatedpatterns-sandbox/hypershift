@@ -38,8 +38,7 @@ spec:
       clientID: 
       clientSecret:
         name: 
-      organizations:
-      - 
+      teams:
     mappingMethod: claim
     name: github
     type: GitHub

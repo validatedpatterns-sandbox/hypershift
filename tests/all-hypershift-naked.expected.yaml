@@ -1,29 +1,75 @@
 ---
-# Source: hypershift/templates/buildconfig.yaml
-kind: BuildConfig
-apiVersion: build.openshift.io/v1
+# Source: hypershift/templates/rbac/hcp-admin-crole.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
 metadata:
-  name: hypershift-bc
-  namespace: multicluster-engine
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
-spec:
-  source:
-    type: Git
-    git:
-      uri: https://github.com/validatedpatterns-sandbox/hypershift
-      ref: main
-    contextDir: containerfiles
-  strategy:
-    type: Docker
-    dockerStrategy:
-      dockerfilePath: Containerfile
-  triggers:
-    - type: ConfigChange
-  output:
-    to:
-      kind: ImageStreamTag
-      name: hypershift:latest
+  name: hcp-admins-crole
+rules:
+- apiGroups:
+  - hypershift.openshift.io
+  resources:
+  - hostedclusters
+  - nodepools
+  verbs:
+  - '*'
+- apiGroups:
+  - hive.openshift.io
+  resources:
+  - clusterdeployments
+  verbs:
+  - '*'
+- apiGroups:
+  - cluster.open-cluster-management.io
+  resources:
+  - managedclusters
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - bootstrap.cluster.x-k8s.io
+  - controlplane.cluster.x-k8s.io
+  - infrastructure.cluster.x-k8s.io
+  - machines.cluster.x-k8s.io
+  - exp.infrastructure.cluster.x-k8s.io
+  - addons.cluster.x-k8s.io
+  - exp.cluster.x-k8s.io
+  - cluster.x-k8s.io
+  - monitoring.coreos.com
+  - monitoring.rhobs
+  resources:
+  - '*'
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - events
+  - configmaps
+  - persistentvolumeclaims
+  - pods
+  - pods/log
+  - secrets
+  - nodes
+  - namespaces
+  - serviceaccounts
+  - services
+  - endpoints
+  verbs:
+  - '*'
+---
+# Source: hypershift/templates/rbac/hcp-admin-crolebinding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: hcp-admins-crb
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: hcp-admins-crole
+subjects:
 ---
 # Source: hypershift/templates/eso-hypershift-aws.yaml
 apiVersion: "external-secrets.io/v1beta1"
@@ -49,25 +95,6 @@ spec:
   dataFrom:
   - extract:
       key: secret/data/hub/awsCreds
----
-# Source: hypershift/templates/imagestream.yaml
-apiVersion: image.openshift.io/v1
-kind: ImageStream
-metadata:
-  name: hypershift
-  namespace: multicluster-engine
-  annotations:
-    argocd.argoproj.io/sync-wave: "1"
-spec:
-  lookupPolicy:
-    local: false
-  tags:
-  - name: latest
-    from:
-      kind: DockerImage
-      name: image-registry.openshift-image-registry.svc:5000/openshift/cli
-    referencePolicy:
-      type: Source
 ---
 # Source: hypershift/templates/multiclusterengine.yaml
 apiVersion: multicluster.openshift.io/v1

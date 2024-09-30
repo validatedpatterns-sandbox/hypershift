@@ -184,6 +184,14 @@ data:
       hubClusterDomain: apps.hub.example.com
       localClusterDomain: apps.region.example.com
       namespace: pattern-namespace
+      oauth:
+        enabled: true
+        github:
+          clientID: Ov23liLPJmP3mVcvNLjn
+          orgs:
+          - name: validatedpatterns
+        secretName: ocp-github-oauth
+        type: GitHub
       options:
         applicationRetryLimit: 20
         installPlanApproval: Automatic
@@ -201,6 +209,17 @@ data:
         revision: main
       multiSourceConfig:
         enabled: true
+    rbac:
+      create: true
+      users:
+      - day0hero
+      - mbaldessari
+      - beekhof
+      - darkdoc
+      - claudiol
+      - mhjacks
+      - mlabonte-rh
+      - yukinchan
     secretStore:
       kind: ClusterSecretStore
       name: vault-backend

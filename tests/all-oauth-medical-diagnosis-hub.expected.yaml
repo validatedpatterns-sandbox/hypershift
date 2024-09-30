@@ -3,7 +3,7 @@
 apiVersion: "external-secrets.io/v1beta1"
 kind: ExternalSecret
 metadata:
-  name: 
+  name: ocp-github-oauth
   namespace: openshift-config
   annotations:
     argocd.argoproj.io/sync-wave: '5'
@@ -18,7 +18,7 @@ spec:
       key: secret/data/hub/oauthCreds
       property: content
   target:
-    name: 
+    name: ocp-github-oauth
     creationPolicy: Owner
     template:
       type: Opaque
@@ -35,11 +35,11 @@ metadata:
 spec:
   identityProviders:
   - github:
-      clientID: 
+      clientID: Ov23liLPJmP3mVcvNLjn
       clientSecret:
-        name: 
+        name: ocp-github-oauth
       organizations:
-      - 
+      - validatedpatterns
     mappingMethod: claim
     name: github
     type: GitHub
