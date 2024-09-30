@@ -11,8 +11,8 @@ clusterGroup:
     - group-sync-operator
     #- ack-system
 
-  operatorgroupExcludes:
-    - ack-system
+#  operatorgroupExcludes:
+#    - ack-system
 
   subscriptions:
     mce:
