@@ -4,18 +4,21 @@
 
 # Role Based Access Controls
 #
-# Provide a list of users to add to the clusterrolebinding
+# if rbac.create is false, the clusterrole and clusterrolebinding will not be created.
 rbac:
   create: true
   role:
     name: hcp-admins-crole
   roleBinding:
     name: hcp-admins-crb
+# Provide a list of users to add to the clusterrolebinding
   users:
   - day0hero
   - mbaldessari
   - beekhof
   - darkdoc
+  - claudiol
+  - mhjacks
 
 clusterGroup:
   isHubCluster: true
