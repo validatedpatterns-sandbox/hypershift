@@ -57,12 +57,12 @@ clusterGroup:
       project: hypershift
       path: charts/all/hypershift
 
-    oauth:
-      disabled: false
-      name: oauth
-      namespace: openshift-config
-      project: hub
-      path: charts/all/oauth
+#    oauth:
+#      disabled: false
+#      name: oauth
+#      namespace: openshift-config
+#      project: hub
+#      path: charts/all/oauth
 
 #    s3:
 #      disabled: false
