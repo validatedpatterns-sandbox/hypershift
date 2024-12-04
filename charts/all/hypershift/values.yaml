@@ -11,11 +11,7 @@ rbac:
     name: hcp-admins-crole
   roleBinding:
     name: hcp-admins-crb
-  users:
-  - day0hero
-  - mbaldessari
-  - beekhof
-  - darkdoc
+  users: []
 
 clusterGroup:
   isHubCluster: true
