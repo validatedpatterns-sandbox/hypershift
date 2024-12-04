@@ -1,29 +1,44 @@
 # Hosted Control Planes ( HyperShift )
 
-## HyperShift docs under construction
-
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 [Live build status](https://validatedpatterns.io/ci/?pattern=mcgitops)
 
 ## Start Here
 
-Official documentation for this pattern will soon be available on our docs site. Until then, here are a few helpful
-hints to get you started.
+This pattern use the validated patterns gitops framework to deploy and configure the multicluster-engine operator with the hypershift (hosted control planes) feature. You can deploy the AWS S3 Controller for kubernetes to create the s3 bucket necessary for HCP and OIDC - you can also choose not too. Everything is in place so that you can be completely contained within this pattern. If you choose to create the s3 bucket on your own, it will need to have a public policy attached to it. Again this pattern will create the bucket, policy and associate the policy with the bucket. 
 
-This pattern use the validated patterns gitops framework to deploy and configure the hosted control plane operator and
-if you so choose, the AWS S3 Controller for Kubernetes to create the bucket needed for hypershift and OIDC. If not, you will need to have provisioned a bucket with a public policy attached.
+We also provide a means to configure oAuth to your cluster. The currently deployed provider is GitHub, and in a future release we'll have htpasswd and maybe something fun like doppler. 
 
 ## PreRequisites
 
-1. You will need to have your own OpenShift cluster. The configuration for our team Hypershift environment
-is a 3 Node - `m5.4xl` cluster in AWS. The size of your machines depends solely on the workloads and number of hostedclusters you intend to run on them.
+### HyperShift
 
-2. For both hypershift and aws s3 controller we need to configure secrets that use your aws credentials. The default uses
+1. A freshly installed cluster. Either a SNO, 3-Node, or other supported variant of an OpenShift Cluster deployment. 
+
+**NOTE** The cluster we use internally is a 3-Node, m5.4xlarge cluster and that has been plenty
+
+2. You will need to complete the `values-secret.yaml.template` file and configure the paths for your secrets; the default is `(~/.aws/credentials)`
+
+3. STS credentials are also required now for cluster provisioning and deprovisioning. Please see: [HyperShift Automation Repo](https://github.com/validatedpatterns/hypershift-automation.git) for further automation.
+
+4. Finally, edit `values-hypershift.yaml` if you want the automation to configure a scoped clusterrole and clusterrolebinding that allows users to provision/deprovison hypershift clusters but not really anything else.
+
+### ACK S3 Controller
+
+1. For both hypershift and aws s3 controller we need to configure secrets that use your aws credentials. The default uses
 `~/.aws/credentials` for parsing the credential.
 
-3. If you elect to not use ACK for creating your s3 bucket, please see the **NOTE** below. Some extra configuration is
+2. If you elect to not use ACK for creating your s3 bucket, please see the **NOTE** below. Some extra configuration is
 necessary to ensure you don't deploy extra operators and configurations you don't need.
+
+### oAuth Provider
+
+1. Update `values-global.yaml` by uncommenting out the oauth section. Provide the necessary informatino for configuring oauth with a github provider.
+
+2. Create a file in your `$HOME` directory called `.oauth` ex: `~/.oauth` - copy/paste the secret GitHub provided into that file and save/close.
+
+3. Update your values-secret.yaml.template file with the correct path 
 
 ## Actions
 
@@ -46,7 +61,6 @@ To get started you will need to fork & clone this repository:
 | region | `<n/a>` | Define the region that you want your s3 bucket created in |
 | bucketName | `<n/a>` | Define the name of your bucket - must be DNS compatible (no `_'s` or special characters) |
 | additionalTags | `<n/a>` | Create a map of tags to be added to the bucket in `key: value` format|
-| buildConfig.git.uri | `<n/a>` | This should be the URL to your git repository |
 
 An example `values-hypershift.yaml` that has been completed:
 
@@ -61,9 +75,6 @@ global:
       bucketOwner: jrickard
       lifecycle: keep
 
-  buildconfig:
-    git:
-      uri: https://github.com/validatedpatterns-sandbox/hypershift
 ```
 
 **NOTE**
@@ -93,5 +104,5 @@ applications:
 ```
 
 If you've followed a link to this repository, but are not really sure what it contains
-or how to use it, head over to [Multicloud GitOps](http://validatedpatterns.io/multicloud-gitops/)
+or how to use it, head over to [HyperShift ValidatedPatterns](http://validatedpatterns.io/hypershift)
 for additional context and installation instructions

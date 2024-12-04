@@ -1,0 +1,61 @@
+{{- if .Values.rbac.create }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ .Values.rbac.role.name }}
+rules:
+- apiGroups:
+  - hypershift.openshift.io
+  resources:
+  - hostedclusters
+  - nodepools
+  verbs:
+  - '*'
+- apiGroups:
+  - hive.openshift.io
+  resources:
+  - clusterdeployments
+  verbs:
+  - '*'
+- apiGroups:
+  - cluster.open-cluster-management.io
+  resources:
+  - managedclusters
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - bootstrap.cluster.x-k8s.io
+  - controlplane.cluster.x-k8s.io
+  - infrastructure.cluster.x-k8s.io
+  - machines.cluster.x-k8s.io
+  - exp.infrastructure.cluster.x-k8s.io
+  - addons.cluster.x-k8s.io
+  - exp.cluster.x-k8s.io
+  - cluster.x-k8s.io
+  - monitoring.coreos.com
+  - monitoring.rhobs
+  resources:
+  - '*'
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - events
+  - configmaps
+  - persistentvolumeclaims
+  - pods
+  - pods/log
+  - secrets
+  - nodes
+  - namespaces
+  - serviceaccounts
+  - services
+  - endpoints
+  verbs:
+  - '*'
+{{- end }}

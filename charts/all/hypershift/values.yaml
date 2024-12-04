@@ -1,6 +1,18 @@
 # Default values for hypershift.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+
+# Role Based Access Controls
+#
+# Provide a list of users to add to the clusterrolebinding
+rbac:
+  create: true
+  role:
+    name: hcp-admins-crole
+  roleBinding:
+    name: hcp-admins-crb
+  users: []
+
 clusterGroup:
   isHubCluster: true
 
