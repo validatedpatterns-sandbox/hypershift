@@ -38,18 +38,4 @@ global:
     region: 
     bucketName: 
 
-# Parameters for the imagestream
-  imagestream:
-    sourceImage: image-registry.openshift-image-registry.svc:5000/openshift/cli
-    tag: latest
-
-# Parameters for the buildconfig
-  buildconfig:
-    git:
-      uri: https://github.com/validatedpatterns-sandbox/hypershift
-      ref: main
-    contextDir: containerfiles
-    dockerfilePath: Containerfile
-    triggers: ConfigChange
-
 # End global parameters
