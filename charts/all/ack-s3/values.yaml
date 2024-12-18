@@ -38,13 +38,3 @@ ackS3:
   ack_resource_tags: acktagged
   enable_leader_election: true
   reconcile_default_max_concurrent_syncs: 1
-
-featureGates:
-  # Enables the Service level granularity for CARM. See https://github.com/aws-controllers-k8s/community/issues/2031
-  ServiceLevelCARM: false
-  # Enables the Team level granularity for CARM. See https://github.com/aws-controllers-k8s/community/issues/2031
-  TeamLevelCARM: false
-  # Enable ReadOnlyResources feature/annotation. 
-  ReadOnlyResources: false
-  # Enable ResourceAdoption feature/annotation. 
-  ResourceAdoption: false
