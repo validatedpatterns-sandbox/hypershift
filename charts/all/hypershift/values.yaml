@@ -39,3 +39,23 @@ global:
     bucketName: 
 
 # End global parameters
+
+# MultiCluster Engine Components
+mce:
+  targetNS: multicluster-engine
+  availabilityConfig: High
+  components:
+    - name: image-based-install-operator-preview
+      enabled: "false"
+    - name: assisted-service
+    - name: cluster-lifecycle
+    - name: cluster-manager
+    - name: discovery
+    - name: hive
+    - name: server-foundation
+    - name: cluster-proxy-addon
+    - name: local-cluster
+    - name: hypershift-local-hosting
+    - name: managedserviceaccount
+    - name: hypershift
+    - name: console-mce
