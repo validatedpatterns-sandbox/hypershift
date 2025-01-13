@@ -6,33 +6,12 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "-5"
 spec:
-  availabilityConfig: High
+  availabilityConfig: {{ .Values.mce.availabilityConfig }}
   overrides:
     components:
-    - enabled: true
-      name: assisted-service
-    - enabled: true
-      name: cluster-lifecycle
-    - enabled: true
-      name: cluster-manager
-    - enabled: true
-      name: discovery
-    - enabled: true
-      name: hive
-    - enabled: true
-      name: server-foundation
-    - enabled: true
-      name: cluster-proxy-addon
-    - enabled: true
-      name: local-cluster
-    - enabled: true
-      name: hypershift-local-hosting
-    - enabled: true
-      name: managedserviceaccount
-    - enabled: true
-      name: hypershift
-    - enabled: true
-      name: console-mce
-    - enabled: false
-      name: image-based-install-operator-preview
-  targetNamespace: multicluster-engine
+    {{- range .Values.mce.components  }}
+      - name: {{ .name }}
+        enabled: {{ .enabled | default "true" }}
+        configOverrides: {}
+    {{- end }}
+  targetNamespace: {{ .Values.mce.targetNS }}
