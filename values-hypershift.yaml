@@ -6,10 +6,10 @@ global:
     createBucket: true
 
     # What region should the bucket be created in.
-    region: eu-west-3
+    region: us-west-2
 
     # Enter the name of your bucket (bucket names are globally unique)
-    bucketName: vp-workshop-state
+    bucketName: vp-workshop-demo
 
     # Any additional tags to add to a bucket created by the pattern
     additionalTags: 
