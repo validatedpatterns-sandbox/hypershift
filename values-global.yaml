@@ -17,7 +17,7 @@ global:
     github:
       clientID: Ov23liUOfh8agDphgvfa
       orgs:
-      - name: #list of github authorized organizations
+      - name: validatedpatterns-demos
 
 main:
   clusterGroupName: hub
