@@ -3,7 +3,7 @@
 global:
   s3:
     # Should the pattern create the s3 bucket(true), or bring your own (false). 
-    createBucket: true
+    createBucket: false
 
     # What region should the bucket be created in.
     region: us-west-2
