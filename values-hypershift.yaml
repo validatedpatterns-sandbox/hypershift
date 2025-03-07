@@ -19,4 +19,6 @@ global:
 rbac:
   create: false
 # Provide a list of users to add to the clusterrolebinding
-  users: []
+  users:
+    - day0hero
+    - dminnear-rh
