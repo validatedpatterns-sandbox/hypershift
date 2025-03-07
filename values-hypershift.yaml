@@ -6,7 +6,7 @@ global:
     createBucket: false
 
     # What region should the bucket be created in.
-    region: us-east-2
+    region: us-west-2
 
     # Enter the name of your bucket (bucket names are globally unique)
     bucketName: vp-hypershift-state
