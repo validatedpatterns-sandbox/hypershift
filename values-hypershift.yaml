@@ -3,13 +3,13 @@
 global:
   s3:
     # Should the pattern create the s3 bucket(true), or bring your own (false). 
-    createBucket: true
+    createBucket: false
 
     # What region should the bucket be created in.
-    region: ''
+    region: us-west-2
 
     # Enter the name of your bucket (bucket names are globally unique)
-    bucketName: ''
+    bucketName: vp-hcp-workshop-state
 
     # Any additional tags to add to a bucket created by the pattern
     additionalTags: 
@@ -17,6 +17,9 @@ global:
 
 # Set rbac.create to false if you want to skip creation of role/rolebinding.
 rbac:
-  create: false
+  create: true
 # Provide a list of users to add to the clusterrolebinding
-  users: []
+  users:
+    - day0hero
+    - dminnear-rh
+    - mhjacks
