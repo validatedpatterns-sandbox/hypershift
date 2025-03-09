@@ -20,10 +20,10 @@ clusterGroup:
       namespace: multicluster-engine
       channel: stable-2.7
 
-    hive:
-      name: hive-operator
-      channel: alpha
-      source: community-operators
+#    hive:
+#      name: hive-operator
+#      channel: alpha
+#      source: community-operators
     
     s3:
       name: ack-s3-controller
@@ -35,7 +35,7 @@ clusterGroup:
     - hub
     - hypershift
     - s3
-    - hive
+#    - hive
 
   applications:
     vault:
@@ -59,11 +59,11 @@ clusterGroup:
       project: hypershift
       path: charts/all/hypershift
 
-    hive:
-      name: hive
-      namespace: hive
-      project: hive
-      path: charts/all/hive
+#    hive:
+#      name: hive
+#      namespace: hive
+#      project: hive
+#      path: charts/all/hive
 
     oauth:
       disabled: false
