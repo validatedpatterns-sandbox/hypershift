@@ -1,0 +1,6 @@
+apiVersion: hive.openshift.io/v1
+kind: ClusterImageSet
+metadata:
+  name: openshift-{{ .Values.hive.openshiftVersion }}
+spec:
+  releaseImage: quay.io/openshift-release-dev/ocp-release:{{ .Values.hive.openshiftVersion }}-{{ .Values.hive.arch }}

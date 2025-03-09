@@ -1,0 +1,11 @@
+apiVersion: hive.openshift.io/v1
+kind: HiveConfig
+metadata:
+  name: hive
+spec:
+  logLevel: debug
+  targetNamespace: hive
+{{- if .Values.hive.globalPullSecret }}
+  name: {{ .Values.hive.pullSecret.name }}
+  namespace: hive
+{{- end }}
