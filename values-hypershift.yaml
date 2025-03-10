@@ -20,6 +20,41 @@ rbac:
   create: true
 # Provide a list of users to add to the clusterrolebinding
   users:
+    - ab129chauhan
+    - abipala
+    - barnalib
+    - beekhof
+    - chinmoyh
+    - chongdershubhayu
+    - claudiol
+    - Code88Hary
+    - darkdoc
     - day0hero
+    - deepaksrivastavajk
     - dminnear-rh
+    - giriv87
+    - jagadishmali
+    - jijeesham
+    - karuppucs
+    - maiby-kunjachan-personal
+    - mangai01
+    - Mangai-tcs
+    - manojjangir82
+    - marimuthu011
+    - mbaldessari
     - mhjacks
+    - nagesh666
+    - pakkaanalytics
+    - pratheebapc
+    - rajendrapadiyar
+    - rambyahatti
+    - rmk183
+    - satvavartphogat
+    - SREDDYVO
+    - SRIVISHNU03
+    - Suhaskumar14
+    - tsubhojit
+    - Uday-testing
+    - Ushazaga22
+    - vb0402
+    - virtualkarthik
