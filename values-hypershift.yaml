@@ -20,9 +20,6 @@ rbac:
   create: true
 # Provide a list of users to add to the clusterrolebinding
   users:
-    - day0hero
-    - dminnear-rh
-    - mhjacks
     - ab129chauhan
     - abipala
     - barnalib
