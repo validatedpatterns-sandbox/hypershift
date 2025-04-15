@@ -59,3 +59,7 @@ mce:
     - name: managedserviceaccount
     - name: hypershift
     - name: console-mce
+    - name: cluster-api-preview
+      enabled: "false"
+    - name: cluster-api-provider-aws-preview
+      enabled: "false"
