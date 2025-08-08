@@ -8,10 +8,10 @@ clusterGroup:
     - vault
     - golang-external-secrets
     - multicluster-engine
-    - ack-system
+#    - ack-system
 
-  operatorgroupExcludes:
-    - ack-system
+#  operatorgroupExcludes:
+#    - ack-system
 
   subscriptions:
     mce:
@@ -19,12 +19,11 @@ clusterGroup:
       namespace: multicluster-engine
       channel: stable-2.8
     
-    s3:
-      disabled: true
-      name: ack-s3-controller
-      namespace: ack-system
-      channel: alpha
-      source: community-operators
+#    s3:
+#      name: ack-s3-controller
+#      namespace: ack-system
+#      channel: alpha
+#      source: community-operators
     
   projects:
     - hub
