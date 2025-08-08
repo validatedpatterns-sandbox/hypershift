@@ -20,6 +20,7 @@ clusterGroup:
       channel: stable-2.8
     
     s3:
+      disabled: true
       name: ack-s3-controller
       namespace: ack-system
       channel: alpha
@@ -46,21 +47,21 @@ clusterGroup:
       chartVersion: 0.1.*
 
     hypershift:
-      disabled: false
+      disabled: true
       name: hypershift
       namespace: multicluster-engine
       project: hypershift
       path: charts/all/hypershift
 
     oauth:
-      disabled: false
+      disabled: true
       name: oauth
       namespace: openshift-config
       project: hub
       path: charts/all/oauth
 
     s3:
-      disabled: false
+      disabled: true
       name: s3-controller
       namespace: ack-system
       project: s3
