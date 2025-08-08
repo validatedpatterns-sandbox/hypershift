@@ -47,7 +47,7 @@ clusterGroup:
       chartVersion: 0.1.*
 
     hypershift:
-      disabled: true
+      disabled: false
       name: hypershift
       namespace: multicluster-engine
       project: hypershift
