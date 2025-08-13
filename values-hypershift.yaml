@@ -1,19 +1,18 @@
 # Override values for HyperShift 
 # Define the s3 bucket information  
 global:
-  s3:
-    # Should the pattern create the s3 bucket(true), or bring your own (false). 
-    createBucket: true
+  hyperShift:
+    s3:
+      # OIDC bucket information: provide regoin and bucketName
+      region: us-east-2
+      bucketName: vp-hypershift-state
+      
+      # Should the pattern create the s3 bucket(true), or bring your own (false). 
+      createBucket: false
 
-    # What region should the bucket be created in.
-    region: ''
-
-    # Enter the name of your bucket (bucket names are globally unique)
-    bucketName: ''
-
-    # Any additional tags to add to a bucket created by the pattern
-    additionalTags: 
-      lifecycle: keep
+      # Any additional tags to add to a bucket created by the pattern
+      additionalTags: 
+        lifecycle: keep
 
 # register a GitHub oAuth application: https://github.com/settings/applications/new
 # configure oauth provider: https://docs.openshift.com/container-platform/4.15/authentication/understanding-identity-provider.html
