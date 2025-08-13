@@ -34,9 +34,10 @@ global:
   useExternalSecrets: true
 
 # S3 bucket information
-  s3:
-    region: 
-    bucketName: 
+  hypershift:
+    oidc:
+      region: ''
+      bucketName: ''
 
 # End global parameters
 
