@@ -24,6 +24,7 @@ We also provide a means to configure oAuth to your cluster. The currently deploy
 
 4. Finally, edit `values-hypershift.yaml` if you want the automation to configure a scoped clusterrole and clusterrolebinding that allows users to provision/deprovison hypershift clusters but not really anything else.
 
+
 ### ACK S3 Controller
 
 1. For both hypershift and aws s3 controller we need to configure secrets that use your aws credentials. The default uses
@@ -34,7 +35,7 @@ necessary to ensure you don't deploy extra operators and configurations you don'
 
 ### oAuth Provider
 
-1. Update `values-global.yaml` by uncommenting out the oauth section. Provide the necessary informatino for configuring oauth with a github provider.
+1. Update `values-hypershift.yaml` by providing the necessary informatino for configuring oauth with a github provider.
 
 2. Create a file in your `$HOME` directory called `.oauth` ex: `~/.oauth` - copy/paste the secret GitHub provided into that file and save/close.
 
@@ -66,7 +67,6 @@ An example `values-hypershift.yaml` that has been completed:
 
 ```yaml
 global:
-  useExternalSecrets: true
   s3:
     createBucket: true
     region: us-west-1
