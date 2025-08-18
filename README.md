@@ -10,13 +10,16 @@ This pattern deploys and configures the multicluster-engine operator with the hy
 
 Within the pattern are some optional deployment configurations that can assist with your HyperShift deployment as well as some Day2 configurations.
 
-1. AWS S3 Controller for Kubernetes (ack-s3)
+- AWS S3 Controller for Kubernetes (ack-s3)
+
   - Configuring this will create a bucket, a public bucket policy and associate the two resources together.
 
-1. oAuth Provider
+- oAuth Provider
+
   - GitHub is the default provider, but others (GitLab, Google, htpasswd) could be configured.
 
-1. RBAC
+- RBAC
+
   - A cluster role and cluster role binding are created for a provided list of users. This role will grant the user the ability to create/destroy/view the resources required for creating hostedclusters on HyperShift.
 
 ## PreRequisites
@@ -35,7 +38,9 @@ Within the pattern are some optional deployment configurations that can assist w
 1. STS credentials are also required now for cluster provisioning and deprovisioning. Please see: [HyperShift Automation Repository](https://github.com/validatedpatterns/hypershift-automation.git) for further automation.
 
 1. Finally, edit `values-hypershift.yaml`
+  
   - Provide the region where the s3 bucket resides
+
   - Provide the bucket name to be used for the OIDC state
 
 **[NOTE]**
@@ -45,25 +50,38 @@ Within the pattern are some optional deployment configurations that can assist w
 
 ### ACK S3 Controller
 
-1. Enable this feature:
+- Enable this feature:
+
   - Edit `values-global.yaml`
+
     - Set `.main.clusterGroupName` to `prod`
+
   - Edit `values-hypershift.yaml`
+
     - Provide the region to create the bucket in
+
     - Provide the bucket name
+
     - set `.global.s3.createBucket` to `true`
 
-1. For both hypershift and aws s3 controller we need to configure secrets that use your aws credentials. The default uses `~/.aws/credentials` for parsing the credential.
+- For both hypershift and aws s3 controller we need to configure secrets that use your aws credentials. The default uses `~/.aws/credentials` for parsing the credential.
 
 ### oAuth Provider
 
-1. Enable this feature:
+- Enable this feature:
+
   - Edit `values-global.yaml`
+
     - Set `.main.clusterGroupName` to `prod`
+
   - Edit `values-hypershift.yaml`
+
     - Set `.global.oauth.github.clientID` 
+
     - Set `.global.oauth.github.orgs.name`
+
   - Edit `values-secret-hypershift.yaml.template` or `~/values-secret-hypershift.yaml`
+  
     - Uncomment the following block:
 
     ```yaml
