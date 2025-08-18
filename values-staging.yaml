@@ -1,0 +1,68 @@
+clusterGroup:
+  name: staging
+  isHubCluster: true
+  sharedValueFiles:
+    - /values-hypershift.yaml
+
+  namespaces:
+    - vault
+    - golang-external-secrets
+    - multicluster-engine
+
+  subscriptions:
+    mce:
+      name: multicluster-engine
+      namespace: multicluster-engine
+      channel: stable-2.8
+    
+  projects:
+    - hub
+    - hypershift
+
+  applications:
+    vault:
+      name: vault
+      namespace: vault
+      project: hub
+      chart: hashicorp-vault
+      chartVersion: 0.1.*
+
+    golang-external-secrets:
+      name: golang-external-secrets
+      namespace: golang-external-secrets
+      project: hub
+      chart: golang-external-secrets
+      chartVersion: 0.1.*
+
+    hypershift:
+      disabled: false
+      name: hypershift
+      namespace: multicluster-engine
+      project: hypershift
+      path: charts/all/hypershift
+
+  imperative:
+    # NOTE: We *must* use lists and not hashes. As hashes lose ordering once parsed by helm
+    # The default schedule is every 10 minutes: imperative.schedule
+    # Total timeout of all jobs is 1h: imperative.activeDeadlineSeconds
+    # imagePullPolicy is set to always: imperative.imagePullPolicy
+    # For additional overrides that apply to the jobs, please refer to
+    # https://hybrid-cloud-patterns.io/imperative-actions/#additional-job-customizations
+    namespace: imperative
+    jobs:
+    - name: hello-world
+      # ansible playbook to be run
+      playbook: rhvp.cluster_utils.hello_world
+      # per playbook timeout in seconds
+      timeout: 234
+      # verbosity: "-v"
+
+  managedClusterGroups:
+    exampleRegion:
+      name: group-one
+      acmlabels:
+      - name: clusterGroup
+        value: group-one
+      helmOverrides:
+      - name: clusterGroup.isHubCluster
+        value: false

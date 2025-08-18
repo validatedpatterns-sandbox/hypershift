@@ -8,13 +8,13 @@ metadata:
     {{ $key }}: {{ $value }}
   {{- end }}
 {{- end }}
-  name: {{ .Values.global.s3.bucketName }}
+  name: {{ .Values.global.hypershift.oidc.bucketName }}
   namespace: {{ .Values.global.s3.bucketNamespace | default "ack-system" }}
   annotations:
     argocd.argoproj.io/hook: PostSync
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
-  name: {{ .Values.global.s3.bucketName }}
+  name: {{ .Values.global.hypershift.oidc.bucketName }}
 {{- if eq .Values.global.s3.createBucketPolicy true | default true }}
   policy: >-
     {{ include "ack-s3-controller.bucket_policy" . }}
