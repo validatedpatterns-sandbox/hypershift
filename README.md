@@ -32,7 +32,7 @@ Within the pattern are some optional deployment configurations that can assist w
 
 2. Update the  `values-secret.yaml.template` template with any changes to the paths for your secrets; the default is `(~/.aws/credentials)`
 
-3. STS credentials are also required now for cluster provisioning and deprovisioning. Please see: [HyperShift Automation Repo](https://github.com/validatedpatterns/hypershift-automation.git) for further automation.
+3. STS credentials are also required now for cluster provisioning and deprovisioning. Please see: [HyperShift Automation Repository](https://github.com/validatedpatterns/hypershift-automation.git) for further automation.
 
 4. Finally, edit `values-hypershift.yaml`
     - Provide the region where the s3 bucket resides
