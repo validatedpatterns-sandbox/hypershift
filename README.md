@@ -26,18 +26,18 @@ Within the pattern are some optional deployment configurations that can assist w
 
 ### HyperShift
 
-1. A freshly installed cluster. Either a SNO, 3-Node, or other supported variant of an OpenShift Cluster deployment.
+- A freshly installed cluster. Either a SNO, 3-Node, or other supported variant of an OpenShift Cluster deployment.
 
 **[NOTE]**
 >
 > The cluster we use internally is a 3-Node, m5.4xlarge cluster and that has been plenty
 >
 
-1. Update the  `values-secret.yaml.template` template with any changes to the paths for your secrets; the default is `(~/.aws/credentials)`
+- Update the  `values-secret.yaml.template` template with any changes to the paths for your secrets; the default is `(~/.aws/credentials)`
 
-1. STS credentials are also required now for cluster provisioning and deprovisioning. Please see: [HyperShift Automation Repository](https://github.com/validatedpatterns/hypershift-automation.git) for further automation.
+- STS credentials are also required now for cluster provisioning and deprovisioning. Please see: [HyperShift Automation Repository](https://github.com/validatedpatterns/hypershift-automation.git) for further automation.
 
-1. Finally, edit `values-hypershift.yaml`
+- Finally, edit `values-hypershift.yaml`
   
   - Provide the region where the s3 bucket resides
 
@@ -81,7 +81,7 @@ Within the pattern are some optional deployment configurations that can assist w
     - Set `.global.oauth.github.orgs.name`
 
   - Edit `values-secret-hypershift.yaml.template` or `~/values-secret-hypershift.yaml`
-  
+
     - Uncomment the following block:
 
     ```yaml
