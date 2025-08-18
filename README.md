@@ -66,6 +66,14 @@ necessary to ensure you don't deploy extra operators and configurations you don'
   - Edit `values-hypershift.yaml`
     * Set `.global.oauth.github.clientID` 
     * Set `.global.oauth.github.orgs.name`
+  - Edit `values-secret-hypershift.yaml.template` or `~/values-secret-hypershift.yaml`
+    * Uncomment the following block:
+    ```yaml
+    - name: oauthCreds
+      fields:
+      - name: content
+        path: ~/.oauth
+    ```
 
 **[IMPORTANT]**
 >
@@ -85,6 +93,52 @@ To get started you will need to fork & clone this repository:
 - `git commit & push your changes`
 
 - `run ./patterns.sh make install`
+
+## Examples
+
+### Example values-hypershift.yaml
+
+```yaml
+global:
+  hypershift:
+    oidc:
+      region: us-west-2
+      bucketName: hcpoidc
+
+  s3:
+    # Should the pattern create the s3 bucket(true), or bring your own (false).
+    createBucket: true
+
+    # Any additional tags to add to a bucket created by the pattern
+    additionalTags:
+      lifecycle: keep
+
+  oauth:
+    type: GitHub
+    secretName: ocp-github-oauth
+    github:
+      clientID: a1b2c3f4d5g6h7i8j9k0 
+      orgs:
+      - name: validatedpatterns
+
+rbac:
+  create: true
+  users:
+    - user1
+    - user2
+    - user3
+
+  ```
+
+#### Example $HOME/.oauth
+
+```sh
+cat ~/.oauth
+```
+
+```sh
+a1b2c3f4d5g6h7i8j9k0a1b2c3f4d5g6h7i8j9k0
+```
 
 If you've followed a link to this repository, but are not really sure what it contains
 or how to use it, head over to [HyperShift ValidatedPatterns](http://validatedpatterns.io/hypershift)
