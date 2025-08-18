@@ -76,7 +76,7 @@ Within the pattern are some optional deployment configurations that can assist w
 
   - Edit `values-hypershift.yaml`
 
-    - Set `.global.oauth.github.clientID` 
+    - Set `.global.oauth.github.clientID`
 
     - Set `.global.oauth.github.orgs.name`
 
