@@ -14,16 +14,16 @@ Within the pattern are some optional deployment configurations that can assist w
     - Configuring this will create a bucket, a public bucket policy and associate the two resources together.
 
 2. oAuth Provider
-    - GitHub is the default provider, but others (GitLab, Google, htpasswd) could be configured. 
+    - GitHub is the default provider, but others (GitLab, Google, htpasswd) could be configured.
 
 3. RBAC
-    - A cluster role and cluster role binding are created for a provided list of users. This role will grant the user the ability to create/destroy/view the resources required for creating hostedclusters on HyperShift. 
+    - A cluster role and cluster role binding are created for a provided list of users. This role will grant the user the ability to create/destroy/view the resources required for creating hostedclusters on HyperShift.
 
 ## PreRequisites
 
 ### HyperShift
 
-1. A freshly installed cluster. Either a SNO, 3-Node, or other supported variant of an OpenShift Cluster deployment. 
+1. A freshly installed cluster. Either a SNO, 3-Node, or other supported variant of an OpenShift Cluster deployment.
 
 **[NOTE]**
 >
@@ -78,7 +78,7 @@ necessary to ensure you don't deploy extra operators and configurations you don'
 **[IMPORTANT]**
 >
 > Using the client secret from GitHub oAuth tool, create a local file `~/.oauth` wtih the github client secret
-> 
+>
 
 ## Actions
 
@@ -117,7 +117,7 @@ global:
     type: GitHub
     secretName: ocp-github-oauth
     github:
-      clientID: a1b2c3f4d5g6h7i8j9k0 
+      clientID: a1b2c3f4d5g6h7i8j9k0
       orgs:
       - name: validatedpatterns
 
