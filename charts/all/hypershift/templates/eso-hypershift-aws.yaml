@@ -18,8 +18,8 @@ spec:
       mergePolicy: Merge
       type: Opaque
       data:
-        region: {{ .Values.global.s3.region }}
-        bucket: {{ .Values.global.s3.bucketName }}
+        region: {{ .Values.global.hypershift.oidc.region }}
+        bucket: {{ .Values.global.hypershift.oidc.bucketName }}
   dataFrom:
   - extract:
       key: {{ .Values.awsCredentials.key }}

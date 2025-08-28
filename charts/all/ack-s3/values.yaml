@@ -21,11 +21,13 @@ global:
 # Provision External Secret resources: default true
   useExternalSecrets: true
 
-# S3 bucket logistical information
+# AWS S3 controller for kubernetes bucket config
+  hypershift:
+    oidc:
+      region:
+      bucketName:
   s3:
-    createBucket: true
-    region: 
-    bucketName: 
+    createBucket:
     createBucketPolicy: true
     additionalTags: []
 

@@ -9,7 +9,7 @@ data:
 {{- range $k, $v := .Values.ackS3 }}
   {{ $k | upper }}: {{ $v | quote }}
 {{- end }}
-  AWS_REGION: {{ $.Values.global.s3.region | quote}}
+  AWS_REGION: {{ $.Values.global.hypershift.oidc.region | quote}}
   ACK_WATCH_NAMESPACE: ""
   AWS_ENDPOINT_URL: ""
   LEADER_ELECTION_NAMESPACE: ""

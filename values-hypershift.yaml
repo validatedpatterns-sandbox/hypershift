@@ -1,19 +1,33 @@
 # Override values for HyperShift 
 # Define the s3 bucket information  
 global:
+  hypershift:
+    oidc:
+# OIDC bucket information: provide regoin and bucketName
+      region: us-east-2
+      bucketName: vp-hypershift-state
+      
+# AWS S3 Controller for Kubernetes configuration 
+# Only modify this when creating a new s3 bucket for your deployment
   s3:
     # Should the pattern create the s3 bucket(true), or bring your own (false). 
     createBucket: false
 
-    # What region should the bucket be created in.
-    region: us-east-2
-
-    # Enter the name of your bucket (bucket names are globally unique)
-    bucketName: vp-hypershift-state
-
     # Any additional tags to add to a bucket created by the pattern
     additionalTags: 
       lifecycle: keep
+
+# register a GitHub oAuth application: https://github.com/settings/applications/new
+# configure oauth provider: https://docs.openshift.com/container-platform/4.15/authentication/understanding-identity-provider.html
+#
+# The default configuration uses github as the provider
+  oauth:
+    type: GitHub
+    secretName: ocp-github-oauth
+    github:
+      clientID: a2f32e0b1d39c9b6098b
+      orgs:
+      - name: validatedpatterns
 
 # Set rbac.create to false if you want to skip creation of role/rolebinding.
 rbac:
@@ -29,4 +43,3 @@ rbac:
   - mlabonte-rh
   - yukinchan
   - dminnear-rh
-

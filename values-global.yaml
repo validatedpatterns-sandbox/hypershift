@@ -7,27 +7,6 @@ global:
     syncPolicy: Automatic
     installPlanApproval: Automatic
 
-# register a GitHub oAuth application: https://github.com/settings/applications/new
-# configure oauth provider: https://docs.openshift.com/container-platform/4.15/authentication/understanding-identity-provider.html
-#
-  oauth:
-    enabled: true
-    type: GitHub
-    secretName: ocp-github-oauth
-    github:
-      clientID: a2f32e0b1d39c9b6098b
-      orgs:
-      - name: validatedpatterns
-
-#  oauth:
-#    enabled: true
-#    type: GitHub
-#    secretName: ocp-github-oauth
-#    github:
-#      clientID: #clientID of the registered GitHub oAuth Application 
-#      orgs:
-#      - name: #list of github authorized organizations
-
 main:
   clusterGroupName: hub
   multiSourceConfig:
