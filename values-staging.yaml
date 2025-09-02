@@ -13,7 +13,7 @@ clusterGroup:
     mce:
       name: multicluster-engine
       namespace: multicluster-engine
-      channel: stable-2.8
+      channel: stable-2.9
     
   projects:
     - hub
