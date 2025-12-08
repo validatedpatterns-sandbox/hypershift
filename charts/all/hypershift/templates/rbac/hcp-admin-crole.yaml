@@ -9,6 +9,7 @@ rules:
   resources:
   - hostedclusters
   - nodepools
+  - nodepools/scale
   verbs:
   - '*'
 - apiGroups:
