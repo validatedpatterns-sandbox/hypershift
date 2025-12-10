@@ -4,6 +4,7 @@ kind: ClusterRole
 metadata:
   name: {{ .Values.rbac.role.name }}
 rules:
+# Full lifecycle control for Hypershift clusters
 - apiGroups:
   - hypershift.openshift.io
   resources:
@@ -12,12 +13,14 @@ rules:
   - nodepools/scale
   verbs:
   - '*'
+# Full permissions for Hive cluster deployments (used by Hypershift)
 - apiGroups:
   - hive.openshift.io
   resources:
   - clusterdeployments
   verbs:
   - '*'
+# Read-only access to managed clusters (for viewing cluster status)
 - apiGroups:
   - cluster.open-cluster-management.io
   resources:
@@ -26,6 +29,7 @@ rules:
   - get
   - list
   - watch
+# Read-only access to cluster API resources (for monitoring cluster state)
 - apiGroups:
   - bootstrap.cluster.x-k8s.io
   - controlplane.cluster.x-k8s.io
@@ -35,6 +39,14 @@ rules:
   - addons.cluster.x-k8s.io
   - exp.cluster.x-k8s.io
   - cluster.x-k8s.io
+  resources:
+  - '*'
+  verbs:
+  - get
+  - list
+  - watch
+# Read-only access to monitoring resources
+- apiGroups:
   - monitoring.coreos.com
   - monitoring.rhobs
   resources:
@@ -43,22 +55,39 @@ rules:
   - get
   - list
   - watch
+# Namespace-scoped resources - only within Hypershift-managed namespaces
+# These are needed for Hypershift cluster lifecycle but scoped to prevent cluster-wide creation
 - apiGroups:
   - ""
   resources:
   - events
   - configmaps
-  - persistentvolumeclaims
-  - pods
-  - pods/log
   - secrets
-  - nodes
-  - namespaces
   - serviceaccounts
   - services
   - endpoints
   verbs:
   - '*'
+# Read-only access to pods (for debugging/troubleshooting)
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - pods/log
+  verbs:
+  - get
+  - list
+  - watch
+# Read-only access to nodes (for cluster status)
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  verbs:
+  - get
+  - list
+  - watch
+# Read-only access to OpenShift config (for cluster information)
 - apiGroups:
   - config.openshift.io
   resources:
@@ -66,6 +95,8 @@ rules:
   verbs:
   - get
   - list
+  - watch
+# Read-only access to ArgoCD applications (prevents installing new patterns)
 - apiGroups:
   - argoproj.io
   resources:
