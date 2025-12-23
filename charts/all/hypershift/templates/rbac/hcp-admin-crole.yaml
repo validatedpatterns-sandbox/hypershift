@@ -66,6 +66,7 @@ rules:
   - serviceaccounts
   - services
   - endpoints
+  - namespaces
   verbs:
   - '*'
 # Read-only access to pods (for debugging/troubleshooting)
