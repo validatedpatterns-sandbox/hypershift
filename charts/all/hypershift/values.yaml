@@ -64,7 +64,7 @@ mce:
       enabled: "false"
     - name: cluster-api-provider-aws
       enabled: "false"
-    - name: cluster-api-provider-metal3-preview
+    - name: cluster-api-provider-metal3
       enabled: "false"
-    - name: cluster-api-provider-openshift-assisted-preview
+    - name: cluster-api-provider-openshift-assisted
       enabled: "false"
