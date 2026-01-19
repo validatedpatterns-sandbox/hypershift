@@ -42,7 +42,7 @@ clusterGroup:
       path: charts/all/hypershift
 
     oauth:
-      disabled: false
+      disabled: true
       name: oauth
       namespace: openshift-config
       project: hub
