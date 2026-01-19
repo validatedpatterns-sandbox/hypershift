@@ -6,7 +6,7 @@ global:
     oidc:
 # OIDC bucket information: provide region and bucketName
       region: us-west-2
-      bucketName: hcp-oidc
+      bucketName: hcp-vp-oidc
 
       
 # register a GitHub oAuth application: https://github.com/settings/applications/new
