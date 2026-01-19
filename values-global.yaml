@@ -8,7 +8,7 @@ global:
     installPlanApproval: Automatic
 
 main:
-  clusterGroupName: staging
+  clusterGroupName: prod
   multiSourceConfig:
     enabled: true
     clusterGroupChartVersion: 0.9.*
