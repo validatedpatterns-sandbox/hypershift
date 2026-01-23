@@ -43,7 +43,7 @@ autoscaling:
       # Time to wait after scale up before considering scale down
       delayAfterAdd: "10m"
       # Node utilization threshold (0.0-1.0) below which nodes are candidates for removal
-      utilizationThreshold: "0.4"
+      utilizationThreshold: "0.6"
 
   # Define MachineAutoscalers for each MachineSet to autoscale
   # Uncomment and configure based on your cluster's MachineSets
