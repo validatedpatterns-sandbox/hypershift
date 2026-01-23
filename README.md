@@ -13,7 +13,7 @@ Within the pattern are some optional deployment configurations that can assist w
 - S3 Bucket with a public policy applied
 
   - Your account will need to have ability to create an s3 bucket and apply a policy to it.
-  - Define the bucket in `values-hypershift.yaml` 
+  - Define the bucket in `values-hypershift.yaml`
 
 - oAuth Provider
 
