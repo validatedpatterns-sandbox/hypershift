@@ -51,22 +51,22 @@ autoscaling:
     - name: worker-us-west-2a
       enabled: true
       machineSetName: hypershift-6qmmk-worker-us-west-2a
-      minReplicas: 1
+      minReplicas: 0
       maxReplicas: 6
     - name: worker-us-west-2b
       enabled: true
       machineSetName: hypershift-6qmmk-worker-us-west-2b
-      minReplicas: 1
+      minReplicas: 0
       maxReplicas: 6
     - name: worker-us-west-2c
       enabled: true
       machineSetName: hypershift-6qmmk-worker-us-west-2c
-      minReplicas: 1
+      minReplicas: 0
       maxReplicas: 6
     - name: worker-us-west-2d
       enabled: true
       machineSetName: hypershift-6qmmk-worker-us-west-2d
-      minReplicas: 1
+      minReplicas: 0
       maxReplicas: 6
   # Example:
   # - name: worker-autoscaler-1a
