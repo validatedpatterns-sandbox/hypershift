@@ -48,19 +48,24 @@ autoscaling:
   # Define MachineAutoscalers for each MachineSet to autoscale
   # Uncomment and configure based on your cluster's MachineSets
   machineAutoscalers:
-    - name: worker-1a
+    - name: worker-us-west-2a
       enabled: true
-      machineSetName: worker-autoscaler-1a
+      machineSetName: hypershift-6qmmk-worker-us-west-2a
       minReplicas: 1
       maxReplicas: 6
-    - name: worker-1b
+    - name: worker-us-west-2b
       enabled: true
-      machineSetName: worker-autoscaler-1b
+      machineSetName: hypershift-6qmmk-worker-us-west-2b
       minReplicas: 1
       maxReplicas: 6
-    - name: worker-1c
+    - name: worker-us-west-2c
       enabled: true
-      machineSetName: worker-autoscaler-1c
+      machineSetName: hypershift-6qmmk-worker-us-west-2c
+      minReplicas: 1
+      maxReplicas: 6
+    - name: worker-us-west-2d
+      enabled: true
+      machineSetName: hypershift-6qmmk-worker-us-west-2d
       minReplicas: 1
       maxReplicas: 6
   # Example:
