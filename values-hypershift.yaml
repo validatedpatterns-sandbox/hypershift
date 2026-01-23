@@ -5,10 +5,9 @@ global:
     createBucket: true
     oidc:
 # OIDC bucket information: provide region and bucketName
-      region: us-west-1
-      bucketName: hypershift-autoscale-vp
+      region: ""
+      bucketName: ""
 
-      
 # register a GitHub oAuth application: https://github.com/settings/applications/new
 # configure oauth provider: https://docs.openshift.com/container-platform/4.15/authentication/understanding-identity-provider.html
 #
@@ -26,7 +25,7 @@ global:
 autoscaling:
   clusterAutoscaler:
     # Set to true to enable cluster autoscaling
-    enabled: true
+    enabled: false
     # Balance nodes across similar MachineSets (e.g., across availability zones)
     balanceSimilarNodeGroups: true
     # Allow scale-down of nodes running pods with emptyDir volumes
@@ -49,27 +48,7 @@ autoscaling:
 
   # Define MachineAutoscalers for each MachineSet to autoscale
   # Uncomment and configure based on your cluster's MachineSets
-  machineAutoscalers:
-    - name: worker-us-west-2a
-      enabled: true
-      machineSetName: hypershift-6qmmk-worker-us-west-2a
-      minReplicas: 0
-      maxReplicas: 6
-    - name: worker-us-west-2b
-      enabled: true
-      machineSetName: hypershift-6qmmk-worker-us-west-2b
-      minReplicas: 0
-      maxReplicas: 6
-    - name: worker-us-west-2c
-      enabled: true
-      machineSetName: hypershift-6qmmk-worker-us-west-2c
-      minReplicas: 0
-      maxReplicas: 6
-    - name: worker-us-west-2d
-      enabled: true
-      machineSetName: hypershift-6qmmk-worker-us-west-2d
-      minReplicas: 0
-      maxReplicas: 6
+  machineAutoscalers: []
   # Example:
   # - name: worker-autoscaler-1a
   #   enabled: true

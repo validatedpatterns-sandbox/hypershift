@@ -27,11 +27,6 @@ autoscaling:
       memory:
         min: 32
         max: 512
-      # Optional: GPU limits (uncomment and configure if using GPUs)
-      # gpus:
-      #   - type: nvidia.com/gpu
-      #     min: 0
-      #     max: 8
     scaleDown:
       enabled: true
       # How long after scale up before scale down evaluation
