@@ -26,7 +26,7 @@ global:
 autoscaling:
   clusterAutoscaler:
     # Set to true to enable cluster autoscaling
-    enabled: false
+    enabled: true
     # Balance nodes across similar MachineSets (e.g., across availability zones)
     balanceSimilarNodeGroups: true
     resourceLimits:
