@@ -10,6 +10,7 @@ spec:
   balancingIgnoredLabels:
     - topology.kubernetes.io/zone
     - topology.ebs.csi.aws.com/zone
+  skipNodesWithLocalStorage: {{ .Values.autoscaling.clusterAutoscaler.skipNodesWithLocalStorage | default false }}
   podPriorityThreshold: {{ .Values.autoscaling.clusterAutoscaler.podPriorityThreshold | default -10 }}
   resourceLimits:
     maxNodesTotal: {{ .Values.autoscaling.clusterAutoscaler.resourceLimits.maxNodesTotal }}

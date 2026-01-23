@@ -29,6 +29,8 @@ autoscaling:
     enabled: true
     # Balance nodes across similar MachineSets (e.g., across availability zones)
     balanceSimilarNodeGroups: true
+    # Allow scale-down of nodes running pods with emptyDir volumes
+    skipNodesWithLocalStorage: false
     resourceLimits:
       # Maximum total nodes allowed in the cluster
       maxNodesTotal: 24

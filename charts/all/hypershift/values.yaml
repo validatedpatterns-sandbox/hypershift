@@ -11,6 +11,9 @@ autoscaling:
     enabled: false
     # Balance similar node groups (e.g., MachineSets across AZs) to spread nodes evenly
     balanceSimilarNodeGroups: true
+    # Allow scale-down of nodes with pods using local storage (emptyDir)
+    # Set to true to prevent scaling down nodes with local storage pods
+    skipNodesWithLocalStorage: false
     # Pods with priority lower than this will not prevent node scale down
     podPriorityThreshold: -10
     resourceLimits:
