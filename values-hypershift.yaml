@@ -47,7 +47,22 @@ autoscaling:
 
   # Define MachineAutoscalers for each MachineSet to autoscale
   # Uncomment and configure based on your cluster's MachineSets
-  machineAutoscalers: []
+  machineAutoscalers:
+    - name: worker-1a
+      enabled: true
+      machineSetName: worker-autoscaler-1a
+      minReplicas: 1
+      maxReplicas: 6
+    - name: worker-1b
+      enabled: true
+      machineSetName: worker-autoscaler-1b
+      minReplicas: 1
+      maxReplicas: 6
+    - name: worker-1c
+      enabled: true
+      machineSetName: worker-autoscaler-1c
+      minReplicas: 1
+      maxReplicas: 6
   # Example:
   # - name: worker-autoscaler-1a
   #   enabled: true
