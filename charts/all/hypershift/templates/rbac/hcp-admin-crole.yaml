@@ -69,7 +69,7 @@ rules:
   - namespaces
   verbs:
   - '*'
-# Read-only access to pods (for debugging/troubleshooting)
+# Debug access to pods (for debugging/troubleshooting)
 - apiGroups:
   - ""
   resources:
@@ -79,6 +79,24 @@ rules:
   - get
   - list
   - watch
+  - create
+  - delete
+# Exec into debug pods
+- apiGroups:
+  - ""
+  resources:
+  - pods/exec
+  verbs:
+  - create
+# Allow exec pod to run privileged (required)
+- apiGroups:
+  - security.openshift.io
+  resources:
+  - securitycontextconstraints
+  resourceNames:
+  - privileged
+  verbs:
+  - use
 # Read-only access to nodes (for cluster status)
 - apiGroups:
   - ""
