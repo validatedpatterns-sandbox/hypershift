@@ -86,6 +86,7 @@ rules:
   - ""
   resources:
   - pods/exec
+  - pods/attach
   verbs:
   - create
 # Allow exec pod to run privileged (required)
