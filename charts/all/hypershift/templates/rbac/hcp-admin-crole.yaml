@@ -131,4 +131,17 @@ rules:
   - get
   - list
   - watch
+# MachineConfiguration
+- apiGroups:
+  - machineconfiguration.openshift.io
+  resources:
+  - machineconfigs
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
 {{- end }}
