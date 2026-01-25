@@ -136,6 +136,7 @@ rules:
   - machineconfiguration.openshift.io
   resources:
   - machineconfigs
+  - machineconfigpools
   verbs:
   - get
   - list
