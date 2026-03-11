@@ -14,6 +14,8 @@ on: [push, pull_request]
 ###############
 # Set the Job #
 ###############
+permissions: read-all
+
 jobs:
   build:
     # Name the Job
@@ -29,12 +31,13 @@ jobs:
       # Checkout the code base #
       ##########################
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
+          persist-credentials: false
           # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
       - name: Setup helm
-        uses: azure/setup-helm@v3
+        uses: azure/setup-helm@5119fcb9089d432beecbf79bb2c7915207344b78 # v3
         # with:
         #   version: '<version>' # default is latest stable
         id: install
