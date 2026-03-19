@@ -12,6 +12,19 @@ spec:
 {{- range .Values.global.github.orgs }}
       - {{ .name }}
 {{- end }}
+{{- $teams := list }}
+{{- range .Values.global.github.orgs }}
+{{- $orgName := .name }}
+{{- range .teams }}
+{{- $teams = append $teams (printf "%s/%s" $orgName .) }}
+{{- end }}
+{{- end }}
+{{- if $teams }}
+      teams:
+{{- range $teams }}
+      - {{ . }}
+{{- end }}
+{{- end }}
     mappingMethod: claim
     name: github
     type: GitHub

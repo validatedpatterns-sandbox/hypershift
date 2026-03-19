@@ -15,6 +15,7 @@ global:
   github:
     orgs:
     - name: #list of organization names that are authorized with oauth
+      teams: [] #list of team names within this org (e.g. [my-team] becomes org/my-team)
   oauth:
     enabled: #True to enable the customization of oauth, false to use cluster deployed
     secretName: #Name of the secret to be generated with appropriate credentials
