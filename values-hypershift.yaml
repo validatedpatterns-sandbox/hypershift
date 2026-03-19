@@ -34,7 +34,7 @@ global:
     secretName: github-group-sync
     github:
       credentialsSecretName: github-group-sync
-      url: https://api.github.com
+      url: https://api.github.com/
 
 # Cluster Autoscaling Configuration
 # Enable autoscaling to automatically adjust cluster size based on workload demands
