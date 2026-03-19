@@ -11,17 +11,28 @@ spec:
   secretStoreRef:
     name: {{ .Values.secretStore.name }}
     kind: {{ .Values.secretStore.kind }}
-  data:
-  - secretKey: token
-    remoteRef:
-      key: {{ default "secret/data/hub/githubGroupSyncToken" .Values.githubTokenKeyPath }}
-      property: content
   target:
     name: {{ .Values.global.groupsync.github.credentialsSecretName }}
     creationPolicy: Owner
     template:
       type: Opaque
-      mergePolicy: Merge
       data:
-        token: |-
-          {{ "{{ .token | trim }}" }}
+        appId: |-
+          {{ "{{ .appId | trim }}" }}
+        installationId: |-
+          {{ "{{ .installationId | trim }}" }}
+        privateKey: |-
+          {{ "{{ .privateKey }}" }}
+  data:
+  - secretKey: appId
+    remoteRef:
+      key: {{ default "secret/data/hub/githubGroupSync" .Values.githubAppKeyPath }}
+      property: appId
+  - secretKey: installationId
+    remoteRef:
+      key: {{ default "secret/data/hub/githubGroupSync" .Values.githubAppKeyPath }}
+      property: installationId
+  - secretKey: privateKey
+    remoteRef:
+      key: {{ default "secret/data/hub/githubGroupSync" .Values.githubAppKeyPath }}
+      property: privateKey
