@@ -44,6 +44,7 @@ rbac:
   - yukinchan
   - dminnear-rh
   - gaurav-nelson
+  - oaharoni-redhat
 
 # Cluster Autoscaling Configuration
 # Enable autoscaling to automatically adjust cluster size based on workload demands
