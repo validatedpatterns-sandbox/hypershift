@@ -1,0 +1,14 @@
+secretStore:
+  name: vault-backend
+  kind: ClusterSecretStore
+
+global:
+  github:
+    orgs:
+    - name: # GitHub organization to sync groups from
+  groupsync:
+    enabled: true
+    secretName: github-group-sync
+    github:
+      credentialsSecretName: github-group-sync
+      url: https://api.github.com
