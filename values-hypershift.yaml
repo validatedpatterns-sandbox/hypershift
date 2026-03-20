@@ -11,10 +11,11 @@ global:
 # GitHub organization(s) — shared by oauth and group-sync
   github:
     orgs:
-    - name: validatedpatterns-sandbox
+    - name: ''
       # Teams to sync with the Group Sync Operator (ignored by oauth)
       teams:
-      - hcp
+      - team1
+      - team2
 
 # register a GitHub oAuth application: https://github.com/settings/applications/new
 # configure oauth provider: https://docs.openshift.com/container-platform/4.15/authentication/understanding-identity-provider.html
@@ -24,7 +25,7 @@ global:
     type: GitHub
     secretName: ocp-github-oauth
     github:
-      clientID: Ov23ligzMFwZD2n3fvfI
+      clientID: ''
 
 # Group Sync Operator Configuration
 # Syncs GitHub organization teams to OpenShift groups
