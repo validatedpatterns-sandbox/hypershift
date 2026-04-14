@@ -5,8 +5,17 @@ global:
     createBucket: true
     oidc:
 # OIDC bucket information: provide region and bucketName
-      region: ""
-      bucketName: ""
+      region: ''
+      bucketName: ''
+
+# GitHub organization(s) — shared by oauth and group-sync
+  github:
+    orgs:
+    - name: 'github-org-name'
+      # Teams: Group Sync uses them for OpenShift groups. OAuth uses org/team slugs
+      # for login when this list is non-empty; otherwise OAuth allows the whole org.
+      # Team names are case-sensitive and must match GitHub exactly, including hyphens. For example: Engineering, not engineering
+      teams: []
 
 # register a GitHub oAuth application: https://github.com/settings/applications/new
 # configure oauth provider: https://docs.openshift.com/container-platform/4.15/authentication/understanding-identity-provider.html
@@ -16,9 +25,16 @@ global:
     type: GitHub
     secretName: ocp-github-oauth
     github:
-      clientID: #clientID of the registered GitHub oAuth Application
-      orgs:
-      - name: #list of github authorized organizations
+      clientID: 'github-app-client-id'
+
+# Group Sync Operator — syncs GitHub teams to OpenShift groups.
+# Vault secret githubGroupSync: `appId` = GitHub App ID (settings/apps → About), not installation ID;
+# `privateKey` = app PEM. The operator resolves org installation from `global.github.orgs[].name`.
+  groupsync:
+    secretName: github-group-sync
+    github:
+      credentialsSecretName: github-group-sync
+      url: https://api.github.com/
 
 # Cluster Autoscaling Configuration
 # Enable autoscaling to automatically adjust cluster size based on workload demands
@@ -54,10 +70,12 @@ autoscaling:
   #   enabled: true
   #   machineSetName: <cluster-name>-worker-<zone>
   #   minReplicas: 0
-  #   maxReplicas: 6
+  #   maxReplicas: 6  
 
 # Set rbac.create to false if you want to skip creation of role/rolebinding.
 rbac:
   create: false
-# Provide a list of users to add to the clusterrolebinding
+# Provide a list of users and/or groups to add to the clusterrolebinding
+# Group and user names must match GitHub exactly, including hyphens. For example: Engineering, not engineering
   users: []
+  groups: []

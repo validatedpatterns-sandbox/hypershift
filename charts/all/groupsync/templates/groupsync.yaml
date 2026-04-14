@@ -1,0 +1,29 @@
+{{- $cg := .Values.clusterGroup | default dict }}
+{{- $apps := $cg.applications | default dict }}
+{{- $gs := index $apps "groupsync" | default dict }}
+{{- if not ($gs.disabled | default false) }}
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: GroupSync
+metadata:
+  name: github-groupsync
+  annotations:
+    argocd.argoproj.io/sync-wave: '15'
+spec:
+  schedule: "*/30 * * * *"
+  providers:
+{{- range .Values.global.github.orgs }}
+  - name: {{ .name }}
+    github:
+      credentialsSecret:
+        name: {{ $.Values.global.groupsync.github.credentialsSecretName }}
+        namespace: group-sync-operator
+      url: {{ $.Values.global.groupsync.github.url }}
+      organization: {{ .name }}
+{{- if .teams }}
+      teams:
+{{- range .teams }}
+      - {{ . }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}

@@ -57,7 +57,7 @@ autoscaling:
 
 # Role Based Access Controls
 #
-# Provide a list of users to add to the clusterrolebinding
+# Provide a list of users and/or groups to add to the clusterrolebinding
 rbac:
   create: true
   role:
@@ -65,6 +65,7 @@ rbac:
   roleBinding:
     name: hcp-admins-crb
   users: []
+  groups: []
 
 clusterGroup:
   isHubCluster: true

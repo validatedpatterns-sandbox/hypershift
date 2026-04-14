@@ -14,4 +14,9 @@ subjects:
   kind: User
   name: {{ . }}
 {{- end }}
+{{- range .Values.rbac.groups }}
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: {{ . }}
+{{- end }}
 {{- end }}

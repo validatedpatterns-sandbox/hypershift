@@ -8,13 +8,20 @@ clusterGroup:
     - vault
     - golang-external-secrets
     - multicluster-engine
+    - group-sync-operator
 
   subscriptions:
     mce:
       name: multicluster-engine
       namespace: multicluster-engine
-      channel: stable-2.10
-    
+      channel: stable-2.11
+
+    groupsync:
+      name: group-sync-operator
+      namespace: group-sync-operator
+      source: community-operators
+      channel: alpha
+
   projects:
     - hub
     - hypershift
@@ -47,6 +54,13 @@ clusterGroup:
       namespace: openshift-config
       project: hub
       path: charts/all/oauth
+
+    groupsync:
+      disabled: false
+      name: groupsync
+      namespace: group-sync-operator
+      project: hub
+      path: charts/all/groupsync
 
   imperative:
     # NOTE: We *must* use lists and not hashes. As hashes lose ordering once parsed by helm
