@@ -1,0 +1,40 @@
+{{- $cg := .Values.clusterGroup | default dict }}
+{{- $apps := $cg.applications | default dict }}
+{{- $gs := index $apps "groupsync" | default dict }}
+{{- if not ($gs.disabled | default false) }}
+{{- $vaultKey := .Values.global.groupsync.githubAppKeyPath | default .Values.githubAppKeyPath | default "secret/data/hub/githubGroupSync" }}
+---
+apiVersion: "external-secrets.io/v1beta1"
+kind: ExternalSecret
+metadata:
+  name: {{ .Values.global.groupsync.secretName }}
+  namespace: group-sync-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: '10'
+spec:
+  refreshInterval: 15s
+  secretStoreRef:
+    name: {{ .Values.secretStore.name }}
+    kind: {{ .Values.secretStore.kind }}
+  target:
+    name: {{ .Values.global.groupsync.github.credentialsSecretName }}
+    creationPolicy: Owner
+    # group-sync-operator GitHub provider: keys must be `appId` (GitHub *App* numeric ID from
+    # the app's settings page, not org installation ID) and PEM `privateKey`. Installation is resolved via API.
+    template:
+      type: Opaque
+      data:
+        appId: |-
+          {{ "{{ .appId | trim }}" }}
+        privateKey: |-
+          {{ "{{ .privateKey }}" }}
+  data:
+  - secretKey: appId
+    remoteRef:
+      key: {{ $vaultKey }}
+      property: appId
+  - secretKey: privateKey
+    remoteRef:
+      key: {{ $vaultKey }}
+      property: privateKey
+{{- end }}

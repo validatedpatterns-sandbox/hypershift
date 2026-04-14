@@ -8,9 +8,26 @@ spec:
       clientID: {{ .Values.global.oauth.github.clientID }}
       clientSecret:
         name: {{ .Values.global.oauth.secretName }}
+{{- $teams := list }}
+{{- range .Values.global.github.orgs }}
+{{- $orgName := .name }}
+{{- range .teams }}
+{{- if . }}
+{{- $teams = append $teams (printf "%s/%s" $orgName .) }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- /* OpenShift allows organizations or teams on GitHub IdP, never both */}}
+{{- if $teams }}
+      teams:
+{{- range $teams }}
+      - {{ . }}
+{{- end }}
+{{- else }}
       organizations:
-{{- range .Values.global.oauth.github.orgs }}
+{{- range .Values.global.github.orgs }}
       - {{ .name }}
+{{- end }}
 {{- end }}
     mappingMethod: claim
     name: github

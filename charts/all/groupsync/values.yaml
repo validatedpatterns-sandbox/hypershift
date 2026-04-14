@@ -1,0 +1,21 @@
+secretStore:
+  name: vault-backend
+  kind: ClusterSecretStore
+
+# Templates render when clusterGroup.applications.groupsync.disabled is false (or unset).
+clusterGroup:
+  applications:
+    groupsync:
+      disabled: false
+
+global:
+  github:
+    orgs:
+    - name: # GitHub organization to sync groups from
+  groupsync:
+    secretName: github-group-sync
+    # Vault KV path for GitHub App creds (vault_utils secret name githubGroupSync → default below).
+    githubAppKeyPath: ""
+    github:
+      credentialsSecretName: github-group-sync
+      url: https://api.github.com
