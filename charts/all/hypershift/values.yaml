@@ -122,3 +122,5 @@ mce:
       enabled: "false"
     - name: cluster-api-provider-openshift-assisted
       enabled: "false"
+    - name: cluster-api-provider-azure-preview
+      enabled: "false"

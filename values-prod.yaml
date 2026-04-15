@@ -3,14 +3,26 @@ clusterGroup:
   isHubCluster: true
   sharedValueFiles:
     - /values-hypershift.yaml
+    - '/overrides/values-{{ $.Values.global.clusterPlatform }}.yaml'
+    - '/overrides/values-{{ $.Values.global.clusterVersion }}-{{ $.Values.clusterGroup.name }}.yaml'
 
   namespaces:
-    - vault
-    - golang-external-secrets
-    - multicluster-engine
-    - group-sync-operator
+    vault:
+    multicluster-engine:
+    group-sync-operator:
+    golang-external-secrets:
+      disabled: true
+    external-secrets-operator:
+      operatorGroup: true
+      targetNamespaces: []
+    external-secrets:
 
   subscriptions:
+    eso:
+      name: openshift-external-secrets-operator
+      namespace: external-secrets-operator
+      channel: stable-v1
+
     mce:
       name: multicluster-engine
       namespace: multicluster-engine
@@ -22,7 +34,7 @@ clusterGroup:
       source: community-operators
       channel: alpha
 
-  projects:
+  argoProjects:
     - hub
     - hypershift
 
@@ -35,32 +47,50 @@ clusterGroup:
       chartVersion: 0.1.*
 
     golang-external-secrets:
-      name: golang-external-secrets
-      namespace: golang-external-secrets
-      project: hub
-      chart: golang-external-secrets
-      chartVersion: 0.1.*
+      disabled: true
+    openshift-external-secrets:
+      name: openshift-external-secrets
+      namespace: external-secrets
+      argoProject: hub
+      chart: openshift-external-secrets
+      chartVersion: 0.0.*
 
     hypershift:
       disabled: false
       name: hypershift
       namespace: multicluster-engine
-      project: hypershift
+      argoProject: hypershift
       path: charts/all/hypershift
 
     oauth:
       disabled: false
       name: oauth
       namespace: openshift-config
-      project: hub
+      argoProject: hub
       path: charts/all/oauth
 
     groupsync:
       disabled: false
       name: groupsync
       namespace: group-sync-operator
-      project: hub
+      argoProject: hub
       path: charts/all/groupsync
+
+    kubelet-config:
+      disabled: false
+      name: kubelet-config
+      namespace: openshift-machine-config-operator
+      argoProject: hub
+      path: charts/all/kubelet-config
+      # Apply after other hub Applications (default sync-wave 0). KubeletConfig triggers
+      # MCO rollouts that can disrupt pods (e.g. Vault) if they run concurrently.
+      annotations:
+        argocd.argoproj.io/sync-wave: "100"
+      ignoreDifferences:
+        - group: machineconfiguration.openshift.io
+          kind: KubeletConfig
+          jqPathExpressions:
+            - .metadata.annotations
 
   imperative:
     # NOTE: We *must* use lists and not hashes. As hashes lose ordering once parsed by helm

@@ -4,7 +4,7 @@
 {{- if not ($gs.disabled | default false) }}
 {{- $vaultKey := .Values.global.groupsync.githubAppKeyPath | default .Values.githubAppKeyPath | default "secret/data/hub/githubGroupSync" }}
 ---
-apiVersion: "external-secrets.io/v1beta1"
+apiVersion: "external-secrets.io/v1"
 kind: ExternalSecret
 metadata:
   name: {{ .Values.global.groupsync.secretName }}

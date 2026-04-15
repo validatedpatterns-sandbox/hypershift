@@ -1,0 +1,6 @@
+# KubeletConfig settings
+kubelet:
+  maxPods: 500
+  # MachineConfigPool role segment: "worker" for normal clusters; "master" for compact/3-node
+  # hubs where all nodes are in the master pool (worker MCP has no machines).
+  targetPool: worker
