@@ -1,0 +1,9 @@
+apiVersion: v2
+name: kubelet-config
+description: A Helm chart for configuring KubeletConfig to adjust maxPods
+
+type: application
+
+version: 0.1.0
+
+appVersion: "0.1.0"
