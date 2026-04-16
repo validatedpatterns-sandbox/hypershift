@@ -44,6 +44,6 @@ extra_features:
   hypershift_support: true
   spoke_support: false
 
-external_requirements:
 # external quay, s3 bucket, agof tokens to access paywalled material, manifests, rag-llm hw (only selected regions)
-s3 bucket: true
+external_requirements:
+  s3_bucket: true
