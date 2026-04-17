@@ -38,13 +38,12 @@ rbac:
   - mbaldessari
   - beekhof
   - darkdoc
-  - claudiol
   - mhjacks
   - mlabonte-rh
-  - yukinchan
   - dminnear-rh
   - gaurav-nelson
   - oaharoni-redhat
+  - OAharoni-RedHat
 
 # Cluster Autoscaling Configuration
 # Enable autoscaling to automatically adjust cluster size based on workload demands
