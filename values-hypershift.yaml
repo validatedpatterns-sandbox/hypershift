@@ -86,3 +86,18 @@ autoscaling:
       machineSetName: hyper2-v7xhq-worker-us-east-2c
       minReplicas: 0
       maxReplicas: 6
+    - name: large-worker-2a
+      enabled: true
+      machineSetName: hyper2-v7xhq-large-worker-us-east-2a
+      minReplicas: 1
+      maxReplicas: 6
+    - name: large-worker-2b
+      enabled: true
+      machineSetName: hyper2-v7xhq-large-worker-us-east-2b
+      minReplicas: 1
+      maxReplicas: 6
+    - name: large-worker-2c
+      enabled: true
+      machineSetName: hyper2-v7xhq-large-worker-us-east-2c
+      minReplicas: 1
+      maxReplicas: 6
