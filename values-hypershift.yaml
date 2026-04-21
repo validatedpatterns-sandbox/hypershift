@@ -72,17 +72,17 @@ autoscaling:
       utilizationThreshold: "0.6"
   machineAutoscalers:
     - name: worker-autoscaler-2a
-      enabled: true
+      enabled: false
       machineSetName: hyper2-v7xhq-worker-us-east-2a
       minReplicas: 0
       maxReplicas: 6
     - name: worker-autoscaler-2b
-      enabled: true
+      enabled: false
       machineSetName: hyper2-v7xhq-worker-us-east-2b
       minReplicas: 0
       maxReplicas: 6
     - name: worker-autoscaler-2c
-      enabled: true
+      enabled: false
       machineSetName: hyper2-v7xhq-worker-us-east-2c
       minReplicas: 0
       maxReplicas: 6
