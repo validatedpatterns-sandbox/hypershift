@@ -70,21 +70,24 @@ autoscaling:
       delayAfterAdd: "10m"
       # Node utilization threshold (0.0-1.0) below which nodes are candidates for removal
       utilizationThreshold: "0.6"
+  # Only MachineSets listed here with enabled: true get a MachineAutoscaler. Disable
+  # default worker autoscalers so the cluster autoscaler scales large-worker pools only
+  # (otherwise CA may add capacity on either worker or large-worker MachineSets).
   machineAutoscalers:
     - name: worker-autoscaler-2a
       enabled: false
       machineSetName: hyper2-v7xhq-worker-us-east-2a
-      minReplicas: 0
+      minReplicas: 1
       maxReplicas: 6
     - name: worker-autoscaler-2b
       enabled: false
       machineSetName: hyper2-v7xhq-worker-us-east-2b
-      minReplicas: 0
+      minReplicas: 1
       maxReplicas: 6
     - name: worker-autoscaler-2c
       enabled: false
       machineSetName: hyper2-v7xhq-worker-us-east-2c
-      minReplicas: 0
+      minReplicas: 1
       maxReplicas: 6
     - name: large-worker-2a
       enabled: true
