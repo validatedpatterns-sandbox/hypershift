@@ -5,16 +5,19 @@ global:
     createBucket: true
     oidc:
 # OIDC bucket information: provide region and bucketName
-      region: "s3-bucket-region"
-      bucketName: "s3-bucket-name"
+      region: "us-east-2"
+      bucketName: "vphcp-state"
 
 # GitHub organization(s) — shared by oauth and group-sync
   github:
     orgs:
-    - name: 'gh-org-name'
+    - name: validatedpatterns
       # Teams: Group Sync uses them for OpenShift groups. OAuth uses org/team slugs
       # for login when this list is non-empty; otherwise OAuth allows the whole org.
-      teams: []
+      teams:
+      - Engineering
+      - qe
+      - Docs
 
 # register a GitHub oAuth application: https://github.com/settings/applications/new
 # configure oauth provider: https://docs.openshift.com/container-platform/4.15/authentication/understanding-identity-provider.html
@@ -24,7 +27,7 @@ global:
     type: GitHub
     secretName: ocp-github-oauth
     github:
-      clientID: 'gh-oauth-client-id'
+      clientID: 'Ov23liX8pobrzJV3I5S0'
 
 # Group Sync Operator — syncs GitHub teams to OpenShift groups.
 # Vault secret githubGroupSync: `appId` = GitHub App ID (settings/apps → About), not installation ID;
@@ -35,8 +38,7 @@ global:
       credentialsSecretName: github-group-sync
       url: https://api.github.com/
 
-# KubeletConfig (charts/all/kubelet-config).
-# If cluster is compact 3-node hub: all nodes are on the master
+# KubeletConfig (charts/all/kubelet-config). Compact 3-node hub: all nodes are on the master
 # MachineConfigPool; the worker pool is empty, so targetPool must be master.
 kubelet:
   targetPool: worker
@@ -46,7 +48,7 @@ kubelet:
 autoscaling:
   clusterAutoscaler:
     # Set to true to enable cluster autoscaling
-    enabled: false
+    enabled: true
     # Balance nodes across similar MachineSets (e.g., across availability zones)
     balanceSimilarNodeGroups: true
     # Allow scale-down of nodes running pods with emptyDir volumes
@@ -69,17 +71,38 @@ autoscaling:
 
   # Define MachineAutoscalers for each MachineSet to autoscale
   # Uncomment and configure based on your cluster's MachineSets
-  machineAutoscalers: []
-  # Example:
-  # - name: worker-autoscaler-1a
-  #   enabled: true
-  #   machineSetName: <cluster-name>-worker-<zone>
-  #   minReplicas: 0
-  #   maxReplicas: 6  
+  machineAutoscalers:
+    - name: worker-autoscaler-2a
+      enabled: true
+      machineSetName: hcp-mktvr-worker-us-west-2a
+      minReplicas: 0
+      maxReplicas: 6
+    - name: worker-autoscaler-2c
+      enabled: true
+      machineSetName: hcp-mktvr-worker-us-west-2c
+      minReplicas: 0
+      maxReplicas: 6
+    - name: worker-autoscaler-2d
+      enabled: true
+      machineSetName: hcp-mktvr-worker-us-west-2d
+      minReplicas: 0
+      maxReplicas: 6
 
 # Set rbac.create to false if you want to skip creation of role/rolebinding.
 rbac:
   create: true
 # Provide a list of users and/or groups to add to the clusterrolebinding
   users: []
-  groups: []
+  groups:
+  - Engineering
+  - qe
+  - Docs
+
+letsencrypt:
+# region can be the empty string unless AccessKeyID and SecretAccessKeyID are not set (which we ensure is never true)
+# Otherwise, set to the region of the cluster, eg. us-east-1
+   region: us-east-2
+   server: https://acme-v02.api.letsencrypt.org/directory
+  # staging URL
+  # server: https://acme-staging-v02.api.letsencrypt.org/directory
+   email: team-vp@ragtagrobot.com
