@@ -16,28 +16,52 @@ clusterGroup:
       operatorGroup: true
       targetNamespaces: []
     external-secrets:
+    openshift-pipelines:
+    cluster-provisioning:
+    # When listed (and not disabled), charts/all/pipelines enables create-klusterlet-addon alongside acm app below.
+    # open-cluster-management:
 
+  # Operator subscriptions default to sync wave 0. Give them an explicit early band so
+  # CSVs exist before Applications that install CRs for those operators (Argo advances
+  # waves only after prior-wave resources are Synced + Healthy where health applies).
   subscriptions:
     eso:
       name: openshift-external-secrets-operator
       namespace: external-secrets-operator
       channel: stable-v1
+      annotations:
+        argocd.argoproj.io/sync-wave: "5"
 
     mce:
       name: multicluster-engine
       namespace: multicluster-engine
       channel: stable-2.11
+      annotations:
+        argocd.argoproj.io/sync-wave: "5"
+
+    openshift-pipelines:
+      name: openshift-pipelines-operator-rh
+      channel: latest
 
     groupsync:
       name: group-sync-operator
       namespace: group-sync-operator
       source: community-operators
       channel: alpha
+      annotations:
+        argocd.argoproj.io/sync-wave: "5"
 
   argoProjects:
     - hub
     - hypershift
+    - pipelines
+    - infrastructure
 
+  # Hub Applications: assign argocd.argoproj.io/sync-wave on every Argo Application so
+  # ordering is explicit and kubelet-config stays in a terminal wave. Argo advances waves
+  # only after resources in the current wave are Synced and Healthy; leaving many apps at
+  # the default wave 0 makes failures harder to reason about and can interact badly with
+  # MCO (KubeletConfig) rollouts during first sync.
   applications:
     vault:
       name: vault
@@ -45,22 +69,82 @@ clusterGroup:
       project: hub
       chart: hashicorp-vault
       chartVersion: 0.1.*
+      annotations:
+        argocd.argoproj.io/sync-wave: "28"
 
     golang-external-secrets:
       disabled: true
+
     openshift-external-secrets:
       name: openshift-external-secrets
       namespace: external-secrets
       argoProject: hub
       chart: openshift-external-secrets
       chartVersion: 0.0.*
+      annotations:
+        argocd.argoproj.io/sync-wave: "38"
+    
+    cert-manager:
+      disabled: false
+      name: openshift-cert-manager
+      namespace: cert-manager-operator
+      argoProject: hub
+      chart: letsencrypt
+      chartVersion: 0.1.*
+      annotations:
+        argocd.argoproj.io/sync-wave: "22"
+      ignoreDifferences:
+        - group: argoproj.io
+          kind: ArgoCD
+          jqPathExpressions:
+            - .metadata.annotations
+    
+    autoscaler:
+      disabled: false
+      name: cluster-autoscaler
+      namespace: openshift-machine-api
+      argoProject: hub
+      chart: cluster-autoscaler
+      chartVersion: 0.0.*
+      annotations:
+        argocd.argoproj.io/sync-wave: "15"
 
     hypershift:
       disabled: false
       name: hypershift
       namespace: multicluster-engine
       argoProject: hypershift
-      path: charts/all/hypershift
+      chart: hypershift-config
+      chartVersion: 0.0.*
+      annotations:
+        argocd.argoproj.io/sync-wave: "18"
+
+    pipelines:
+      disabled: false
+      name: pipelines
+      namespace: openshift-pipelines
+      argoProject: pipelines
+      path: charts/all/pipelines
+      chart: cluster-pipelines
+      chartVersion: 0.0.*
+      annotations:
+        argocd.argoproj.io/sync-wave: "18"
+
+    # Uncomment when ACM is installed — pipelines chart detects this key and enables Klusterlet add-on task.
+    # acm:
+    #   name: acm
+    #   namespace: open-cluster-management
+    #   argoProject: hub
+    #   chart: acm
+    #   chartVersion: 0.2.*
+
+    credentials:
+      name: pattern-credentials
+      namespace: cluster-provisioning
+      argoProject: infrastructure
+      path: charts/all/pattern-credentials
+      annotations:
+        argocd.argoproj.io/sync-wave: "50"
 
     oauth:
       disabled: false
@@ -68,6 +152,8 @@ clusterGroup:
       namespace: openshift-config
       argoProject: hub
       path: charts/all/oauth
+      annotations:
+        argocd.argoproj.io/sync-wave: "50"
 
     groupsync:
       disabled: false
@@ -75,6 +161,15 @@ clusterGroup:
       namespace: group-sync-operator
       argoProject: hub
       path: charts/all/groupsync
+      annotations:
+        argocd.argoproj.io/sync-wave: "60"
+
+    hypershift-cli:
+      disabled: false
+      name: hcp-cli
+      namespace: cluster-provisioning
+      argoProject: infrastructure
+      path: charts/all/hcp-cli
 
     kubelet-config:
       disabled: false
@@ -82,10 +177,10 @@ clusterGroup:
       namespace: openshift-machine-config-operator
       argoProject: hub
       path: charts/all/kubelet-config
-      # Apply after other hub Applications (default sync-wave 0). KubeletConfig triggers
-      # MCO rollouts that can disrupt pods (e.g. Vault) if they run concurrently.
+      # Terminal wave: KubeletConfig triggers MCO node reconcile and must not run until
+      # hub workloads above (Vault, ESO, routes, etc.) are healthy.
       annotations:
-        argocd.argoproj.io/sync-wave: "100"
+        argocd.argoproj.io/sync-wave: "999"
       ignoreDifferences:
         - group: machineconfiguration.openshift.io
           kind: KubeletConfig
