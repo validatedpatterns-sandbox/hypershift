@@ -1,0 +1,38 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: {{ .Values.buildConfig.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  {{- if .Values.buildConfig.schedule }}
+  triggers:
+  - type: ConfigChange
+  - type: Cron
+    cron:
+      schedule: {{ .Values.buildConfig.schedule | quote }}
+  {{- else }}
+  triggers:
+  - type: ConfigChange
+  {{- end }}
+  runPolicy: Serial
+  serviceAccount: {{ .Values.serviceAccount.name }}
+  source:
+    type: Dockerfile
+    dockerfile: |
+      FROM {{ .Values.buildConfig.baseImage }} AS base
+
+      USER root
+      RUN curl -sSL "http://{{ .Values.buildConfig.hcpDownloadService }}/linux/amd64/hcp.tar.gz" \
+            -o /tmp/hcp.tar.gz && \
+          tar xzf /tmp/hcp.tar.gz -C /usr/local/bin && \
+          chmod +x /usr/local/bin/hcp && \
+          rm -f /tmp/hcp.tar.gz && \
+          hcp version
+  strategy:
+    type: Docker
+    dockerStrategy:
+      noCache: true
+  output:
+    to:
+      kind: ImageStreamTag
+      name: {{ .Values.imageStream.name }}:latest

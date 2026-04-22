@@ -1,0 +1,42 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  generateName: deploy-hypershift-
+  namespace: cluster-provisioning
+spec:
+  pipelineRef:
+    name: deploy-hypershift-cluster
+  params:
+  - name: cluster-name
+    value: hcptest
+  - name: base-domain
+    value: aws.validatedpatterns.io
+  - name: cloud-region
+    value: us-west-2
+  - name: node-pool-replicas
+    value: "1"
+  - name: instance-type
+    value: m5.xlarge
+  - name: role-arn
+    value: "arn:aws:iam::296267305927:role/hypershift_cli_role"
+  - name: timeout-minutes
+    value: "30"
+  taskRunTemplate:
+    serviceAccountName: provisioner
+  workspaces:
+  - name: credentials
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+  - name: kubeconfig
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
