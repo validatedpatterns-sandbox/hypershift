@@ -1,0 +1,13 @@
+# ClusterRole + ClusterRoleBinding granting full lifecycle (get/list/watch/create/update/patch/delete)
+# on core Tekton Pipelines CRDs and Triggers CRDs in any namespace, plus read-only use of
+# cluster-scoped catalog objects (ClusterTask, cluster-scoped triggers) and pod log access
+# for pipeline debugging.
+pipelinesRbac:
+  create: true
+  clusterRoleName: openshift-pipelines-tekton-admin
+  clusterRoleBindingName: openshift-pipelines-tekton-admin
+  # If false, omits cluster-wide Pod rules (tighter; you may grant namespace Role view/edit separately for logs).
+  includePodLogAccess: true
+  # OpenShift Users and Groups (e.g. GitHub Group Sync → group name "my-org-my-team")
+  users: []
+  groups: []

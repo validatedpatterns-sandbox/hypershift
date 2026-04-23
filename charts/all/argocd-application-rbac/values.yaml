@@ -1,0 +1,11 @@
+# Kubernetes RBAC on argoproj.io resources used by Argo CD / OpenShift GitOps.
+# The Argo CD API server may still require policy in argocd-rbac-cm (policy.csv) for UI
+# actions; pair this chart with GitOps RBAC policy for your groups.
+argocdApplicationRbac:
+  create: true
+  clusterRoleName: openshift-gitops-application-manager
+  clusterRoleBindingName: openshift-gitops-application-manager
+  # When true, also allows create/update/delete on the ArgoCD operator CR (cluster-scoped).
+  includeArgoCdOperatorCr: false
+  users: []
+  groups: []

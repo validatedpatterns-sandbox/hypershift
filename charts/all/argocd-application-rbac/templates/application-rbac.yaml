@@ -1,0 +1,79 @@
+{{- $cfg := .Values.argocdApplicationRbac | default dict }}
+{{- $doCreate := true }}
+{{- $createFlag := index $cfg "create" }}
+{{- if kindIs "bool" $createFlag }}
+{{- $doCreate = $createFlag }}
+{{- end }}
+{{- $includeArgoCD := false }}
+{{- $argoCrFlag := index $cfg "includeArgoCdOperatorCr" }}
+{{- if kindIs "bool" $argoCrFlag }}
+{{- $includeArgoCD = $argoCrFlag }}
+{{- end }}
+{{- if $doCreate }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ $cfg.clusterRoleName | default "openshift-gitops-application-manager" }}
+rules:
+  # Argo CD Application, ApplicationSet, AppProject (incl. status/finalizers for sync + deletion)
+  - apiGroups:
+      - argoproj.io
+    resources:
+      - applications
+      - applications/status
+      - applications/finalizers
+      - applicationsets
+      - applicationsets/status
+      - applicationsets/finalizers
+      - appprojects
+      - appprojects/status
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+      - deletecollection
+{{- if $includeArgoCD }}
+  # Argo CD / OpenShift GitOps operator instance (cluster-scoped); enables changing operator-managed settings via CR.
+  - apiGroups:
+      - argoproj.io
+    resources:
+      - argocds
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+      - deletecollection
+{{- end }}
+{{- $users := $cfg.users | default list }}
+{{- $groups := $cfg.groups | default list }}
+{{- if or (gt (len $users) 0) (gt (len $groups) 0) }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ $cfg.clusterRoleBindingName | default "openshift-gitops-application-manager" }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ $cfg.clusterRoleName | default "openshift-gitops-application-manager" }}
+subjects:
+{{- range $users }}
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: {{ . | quote }}
+{{- end }}
+{{- range $groups }}
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: {{ . | quote }}
+{{- end }}
+{{- end }}
+{{- end }}

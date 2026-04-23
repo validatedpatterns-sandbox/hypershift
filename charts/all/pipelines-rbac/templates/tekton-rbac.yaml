@@ -1,0 +1,112 @@
+{{- $cfg := .Values.pipelinesRbac | default dict }}
+{{- $podAccess := true }}
+{{- $podFlag := index $cfg "includePodLogAccess" }}
+{{- if kindIs "bool" $podFlag }}
+{{- $podAccess = $podFlag }}
+{{- end }}
+{{- $doCreate := true }}
+{{- $createFlag := index $cfg "create" }}
+{{- if kindIs "bool" $createFlag }}
+{{- $doCreate = $createFlag }}
+{{- end }}
+{{- if $doCreate }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ $cfg.clusterRoleName | default "openshift-pipelines-tekton-admin" }}
+rules:
+  # Core Tekton Pipelines (namespaced)
+  - apiGroups:
+      - tekton.dev
+    resources:
+      - pipelines
+      - pipelineruns
+      - tasks
+      - taskruns
+      - runs
+      - customruns
+      - pipelineresources
+      - verificationpolicies
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+      - deletecollection
+  # Cluster-scoped task catalog (read-only; cluster-wide Task definitions stay platform-owned)
+  - apiGroups:
+      - tekton.dev
+    resources:
+      - clustertasks
+    verbs:
+      - get
+      - list
+      - watch
+  # Tekton Triggers (namespaced)
+  - apiGroups:
+      - triggers.tekton.dev
+    resources:
+      - eventlisteners
+      - triggers
+      - triggerbindings
+      - triggertemplates
+      - interceptors
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+      - deletecollection
+  # Triggers cluster catalog
+  - apiGroups:
+      - triggers.tekton.dev
+    resources:
+      - clustertriggerbindings
+      - clusterinterceptors
+    verbs:
+      - get
+      - list
+      - watch
+{{- if $podAccess }}
+  # Pod logs for PipelineRun / TaskRun debugging (console and kubectl/oc)
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - pods/log
+    verbs:
+      - get
+      - list
+      - watch
+{{- end }}
+{{- $users := $cfg.users | default list }}
+{{- $groups := $cfg.groups | default list }}
+{{- if or (gt (len $users) 0) (gt (len $groups) 0) }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ $cfg.clusterRoleBindingName | default "openshift-pipelines-tekton-admin" }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ $cfg.clusterRoleName | default "openshift-pipelines-tekton-admin" }}
+subjects:
+{{- range $users }}
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: {{ . | quote }}
+{{- end }}
+{{- range $groups }}
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: {{ . | quote }}
+{{- end }}
+{{- end }}
+{{- end }}

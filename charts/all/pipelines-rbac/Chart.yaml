@@ -1,0 +1,6 @@
+apiVersion: v2
+name: pipelines-rbac
+description: ClusterRole and ClusterRoleBinding for Tekton / OpenShift Pipelines developer access
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
