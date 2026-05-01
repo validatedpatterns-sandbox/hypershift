@@ -3,17 +3,27 @@ clusterGroup:
   isHubCluster: true
   sharedValueFiles:
     - /values-hypershift.yaml
+    - '/overrides/values-{{ $.Values.global.clusterPlatform }}.yaml'
+    - '/overrides/values-{{ $.Values.global.clusterVersion }}-{{ $.Values.clusterGroup.name }}.yaml'
 
   namespaces:
-    - vault
-    - golang-external-secrets
+    vault:
+    external-secrets-operator:
+      operatorGroup: true
+      targetNamespaces: []
+    external-secrets:
     - multicluster-engine
 
   subscriptions:
+    eso:
+      name: openshift-external-secrets-operator
+      namespace: external-secrets-operator
+      channel: stable-v1
+    
     mce:
       name: multicluster-engine
       namespace: multicluster-engine
-      channel: stable-2.10
+      channel: stable-2.11
     
   projects:
     - hub
@@ -23,23 +33,39 @@ clusterGroup:
     vault:
       name: vault
       namespace: vault
-      project: hub
+      argoProject: hub
       chart: hashicorp-vault
       chartVersion: 0.1.*
 
-    golang-external-secrets:
-      name: golang-external-secrets
-      namespace: golang-external-secrets
-      project: hub
-      chart: golang-external-secrets
-      chartVersion: 0.1.*
+    openshift-external-secrets:
+      name: openshift-external-secrets
+      namespace: external-secrets
+      argoProject: hub
+      chart: openshift-external-secrets
+      chartVersion: 0.0.*
 
     hypershift:
       disabled: false
       name: hypershift
       namespace: multicluster-engine
-      project: hypershift
-      path: charts/all/hypershift
+      argoProject: hypershift
+      chart: hypershift-config
+      chartVersion: 0.0.*
+  
+    hypershift-cli:
+      disabled: false
+      name: hcp-cli
+      namespace: cluster-provisioning
+      argoProject: infrastructure
+      path: charts/all/hcp-cli  
+
+    autoscaler:
+      disabled: false
+      name: cluster-autoscaler
+      namespace: openshift-machine-api
+      argoProject: hypershift
+      chart: cluster-autoscaler
+      chartVersion: 0.0.*
 
   imperative:
     # NOTE: We *must* use lists and not hashes. As hashes lose ordering once parsed by helm

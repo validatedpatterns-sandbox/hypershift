@@ -10,8 +10,6 @@ clusterGroup:
     vault:
     multicluster-engine:
     group-sync-operator:
-    golang-external-secrets:
-      disabled: true
     external-secrets-operator:
       operatorGroup: true
       targetNamespaces: []
@@ -71,9 +69,6 @@ clusterGroup:
       chartVersion: 0.1.*
       annotations:
         argocd.argoproj.io/sync-wave: "28"
-
-    golang-external-secrets:
-      disabled: true
 
     openshift-external-secrets:
       name: openshift-external-secrets
