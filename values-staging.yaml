@@ -12,7 +12,7 @@ clusterGroup:
       operatorGroup: true
       targetNamespaces: []
     external-secrets:
-    - multicluster-engine
+    multicluster-engine:
 
   subscriptions:
     eso:
