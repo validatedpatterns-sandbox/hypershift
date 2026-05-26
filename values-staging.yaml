@@ -25,9 +25,10 @@ clusterGroup:
       namespace: multicluster-engine
       channel: stable-2.11
     
-  projects:
+  argoProjects:
     - hub
     - hypershift
+    - infrastructure
 
   applications:
     vault:
