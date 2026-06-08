@@ -109,6 +109,7 @@ pipelinesRbac:
   users: []
   groups:
     - Engineering
+    - qe
 
 # Argo CD / OpenShift GitOps Application CRs (charts/all/argocd-application-rbac).
 # Grants Kubernetes API access to applications, applicationsets, and appprojects.
