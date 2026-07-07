@@ -73,6 +73,15 @@ rules:
       - get
       - list
       - watch
+  # PVC read is needed for UI pipeline starts
+  - apiGroups:
+      - ""
+    resources:
+      - persistentvolumeclaims
+    verbs:
+      - get
+      - list
+      - watch
 {{- if $podAccess }}
   # Pod logs for PipelineRun / TaskRun debugging (console and kubectl/oc)
   - apiGroups:
