@@ -18,6 +18,7 @@ clusterGroup:
     external-secrets:
     openshift-pipelines:
     cluster-provisioning:
+    vp-qe-ci:
     # When listed (and not disabled), charts/all/pipelines enables create-klusterlet-addon alongside acm app below.
     # open-cluster-management:
 
