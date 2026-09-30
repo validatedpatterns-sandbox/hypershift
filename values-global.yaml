@@ -1,6 +1,7 @@
 ---
 global:
   pattern: hypershift
+  singleArgoCD: true
 
   options:
     useCSV: false
@@ -8,7 +9,7 @@ global:
     installPlanApproval: Automatic
 
 main:
-  clusterGroupName: staging
+  variant: staging
   multiSourceConfig:
     enabled: true
     clusterGroupChartVersion: 0.9.*

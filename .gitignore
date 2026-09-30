@@ -8,4 +8,8 @@ vault.init
 super-linter.log
 common/pattern-vault.init
 .cursor/*
+.claude/*
 examples/*
+tests/ci/.results/
+tests/ci/.pytest_cache/*
+tests/ci/__pycache__/*
