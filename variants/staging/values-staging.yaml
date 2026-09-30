@@ -24,7 +24,7 @@ clusterGroup:
     mce:
       name: multicluster-engine
       namespace: multicluster-engine
-      channel: stable-2.11
+      channel: stable-2.17
     
   argoProjects:
     - hub
