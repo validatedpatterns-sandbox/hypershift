@@ -2,11 +2,11 @@
 # Define the s3 bucket information
 global:
   hypershift:
-    createBucket: true
+    createBucket: false
     oidc:
 # OIDC bucket information: provide region and bucketName
-      region: "s3-bucket-region"
-      bucketName: "s3-bucket-name"
+      region: "us-west-2"
+      bucketName: "hypershift-vp-ci"
 
 # GitHub organization(s) — shared by oauth and group-sync
   github:
