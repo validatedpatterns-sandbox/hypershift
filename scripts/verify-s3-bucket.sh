@@ -185,6 +185,37 @@ fi
 
 echo "Checking S3 bucket: ${BUCKET_NAME}"
 
+# Wire up AWS credentials without breaking local/default CLI auth.
+#
+# CI copies the pattern awsCreds shared-credentials file to ~/credentials
+# (see values-secret path: ~/credentials). That is not on the AWS CLI default
+# search path, so only in that case we set AWS_SHARED_CREDENTIALS_FILE.
+#
+# Otherwise leave the normal chain alone: env vars, AWS_PROFILE, ~/.aws/*,
+# SSO, instance roles, etc.
+setup_aws_credentials() {
+    if [ -n "${AWS_SHARED_CREDENTIALS_FILE:-}" ]; then
+        if [ ! -f "${AWS_SHARED_CREDENTIALS_FILE}" ]; then
+            echo "Error: AWS_SHARED_CREDENTIALS_FILE=${AWS_SHARED_CREDENTIALS_FILE} does not exist"
+            exit 1
+        fi
+        echo "Using AWS credentials file: ${AWS_SHARED_CREDENTIALS_FILE}"
+    elif [ -z "${AWS_ACCESS_KEY_ID:-}" ] && [ -z "${AWS_PROFILE:-}" ] && \
+         [ -n "${HOME:-}" ] && [ -f "${HOME}/credentials" ]; then
+        export AWS_SHARED_CREDENTIALS_FILE="${HOME}/credentials"
+        echo "Using AWS credentials file: ${AWS_SHARED_CREDENTIALS_FILE}"
+    fi
+
+    # Prefer the bucket's configured region for this check; do not override if
+    # the caller already set one explicitly.
+    if [ -n "${REGION}" ]; then
+        export AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:-${REGION}}"
+        export AWS_REGION="${AWS_REGION:-${REGION}}"
+    fi
+}
+
+setup_aws_credentials
+
 # Function to check if bucket is public
 check_bucket_public() {
     local bucket="$1"
@@ -233,11 +264,14 @@ show_not_public_error() {
     echo "    --public-access-block-configuration 'BlockPublicAcls=false,IgnorePublicAcls=false,BlockPublicPolicy=false,RestrictPublicBuckets=false'"
 }
 
-# Check if bucket exists
+# Check if bucket exists (capture stderr — "not accessible" is often missing creds/perms)
 BUCKET_EXISTS=false
-if aws s3api head-bucket --bucket "${BUCKET_NAME}" 2>/dev/null; then
+HEAD_BUCKET_ERR=$(mktemp)
+if aws s3api head-bucket --bucket "${BUCKET_NAME}" 2>"${HEAD_BUCKET_ERR}"; then
     BUCKET_EXISTS=true
 fi
+HEAD_BUCKET_MSG=$(tr -d '\r' < "${HEAD_BUCKET_ERR}" | sed '/^$/d' || true)
+rm -f "${HEAD_BUCKET_ERR}"
 
 # Handle createBucket=true
 if [ "${CREATE_BUCKET}" == "true" ]; then
@@ -281,6 +315,10 @@ fi
 # createBucket is not true - just verify bucket exists and is public
 if [ "${BUCKET_EXISTS}" != "true" ]; then
     echo "Error: S3 bucket '${BUCKET_NAME}' does not exist or is not accessible"
+    if [ -n "${HEAD_BUCKET_MSG}" ]; then
+        echo "aws s3api head-bucket error:"
+        echo "${HEAD_BUCKET_MSG}"
+    fi
     echo ""
     echo "To create the bucket, either:"
     echo "  1. Set .global.hypershift.createBucket to true in ${VALUES_FILE} (or via EXTRA_HELM_OPTS --set)"
