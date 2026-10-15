@@ -4,6 +4,10 @@ set -o pipefail
 # Script to verify that the OIDC S3 bucket is defined and exists
 # If .global.hypershift.createBucket is true, will create the bucket if it doesn't exist
 # Usage: ./verify-s3-bucket.sh [values-file]
+#
+# Honors EXTRA_HELM_OPTS the same way pattern install does: -f/--values files are
+# merged in order, then --set/--set-string overrides win. Only keys under
+# global.hypershift are considered here.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 VALUES_FILE="${1:-values-hypershift.yaml}"
@@ -19,19 +23,153 @@ if ! command -v yq &> /dev/null; then
     exit 1
 fi
 
-# Extract values from values file
-BUCKET_NAME=$(yq '.global.hypershift.oidc.bucketName' "${VALUES_FILE}")
-REGION=$(yq '.global.hypershift.oidc.region' "${VALUES_FILE}")
-CREATE_BUCKET=$(yq '.global.hypershift.createBucket' "${VALUES_FILE}")
+read_hypershift_values_from_file() {
+    local file="$1"
+    local bucket region create
+
+    bucket=$(yq '.global.hypershift.oidc.bucketName' "${file}")
+    region=$(yq '.global.hypershift.oidc.region' "${file}")
+    create=$(yq '.global.hypershift.createBucket' "${file}")
+
+    if [ -n "${bucket}" ] && [ "${bucket}" != "null" ]; then
+        BUCKET_NAME="${bucket}"
+    fi
+    if [ -n "${region}" ] && [ "${region}" != "null" ]; then
+        REGION="${region}"
+    fi
+    if [ -n "${create}" ] && [ "${create}" != "null" ]; then
+        CREATE_BUCKET="${create}"
+    fi
+}
+
+# Apply a single helm --set / --set-string argument (may be comma-separated pairs).
+# Escaped commas (\,) are treated as literal commas in values.
+apply_set_arg() {
+    local setarg="$1"
+    local pair key val rest
+
+    rest="${setarg}"
+    while [ -n "${rest}" ]; do
+        # Split on the next unescaped comma
+        if [[ "${rest}" =~ ^(([^\\,]|\\.)+)(,(.*))?$ ]]; then
+            pair="${BASH_REMATCH[1]}"
+            rest="${BASH_REMATCH[4]}"
+        else
+            pair="${rest}"
+            rest=""
+        fi
+        # Unescape \,
+        pair="${pair//\\,/,}"
+
+        key="${pair%%=*}"
+        if [ "${key}" = "${pair}" ]; then
+            continue
+        fi
+        val="${pair#*=}"
+
+        case "${key}" in
+            global.hypershift.createBucket)
+                CREATE_BUCKET="${val}"
+                ;;
+            global.hypershift.oidc.region)
+                REGION="${val}"
+                ;;
+            global.hypershift.oidc.bucketName)
+                BUCKET_NAME="${val}"
+                ;;
+        esac
+    done
+}
+
+# Merge EXTRA_HELM_OPTS over values already loaded from VALUES_FILE.
+# Precedence matches helm: later -f/--values override earlier; --set wins over files.
+apply_extra_helm_opts() {
+    local opts="${EXTRA_HELM_OPTS:-}"
+    [ -z "${opts}" ] && return 0
+
+    echo "Applying EXTRA_HELM_OPTS: ${opts}"
+
+    # Word-split like make/helm (EXTRA_HELM_OPTS is a helm argv string)
+    # shellcheck disable=SC2206
+    local -a args=( ${opts} )
+    local i=0
+    local -a set_args=()
+
+    while [ "${i}" -lt "${#args[@]}" ]; do
+        local arg="${args[$i]}"
+        case "${arg}" in
+            -f|--values)
+                i=$((i + 1))
+                if [ "${i}" -ge "${#args[@]}" ]; then
+                    echo "Error: ${arg} in EXTRA_HELM_OPTS requires a file path"
+                    exit 1
+                fi
+                if [ ! -f "${args[$i]}" ]; then
+                    echo "Error: values file '${args[$i]}' from EXTRA_HELM_OPTS not found"
+                    exit 1
+                fi
+                read_hypershift_values_from_file "${args[$i]}"
+                ;;
+            -f*)
+                local fpath="${arg#-f}"
+                if [ ! -f "${fpath}" ]; then
+                    echo "Error: values file '${fpath}' from EXTRA_HELM_OPTS not found"
+                    exit 1
+                fi
+                read_hypershift_values_from_file "${fpath}"
+                ;;
+            --values=*)
+                local fpath="${arg#--values=}"
+                if [ ! -f "${fpath}" ]; then
+                    echo "Error: values file '${fpath}' from EXTRA_HELM_OPTS not found"
+                    exit 1
+                fi
+                read_hypershift_values_from_file "${fpath}"
+                ;;
+            --set|--set-string)
+                i=$((i + 1))
+                if [ "${i}" -ge "${#args[@]}" ]; then
+                    echo "Error: ${arg} in EXTRA_HELM_OPTS requires a value"
+                    exit 1
+                fi
+                set_args+=("${args[$i]}")
+                ;;
+            --set=*)
+                set_args+=("${arg#--set=}")
+                ;;
+            --set-string=*)
+                set_args+=("${arg#--set-string=}")
+                ;;
+        esac
+        i=$((i + 1))
+    done
+
+    # --set overrides apply after all values files
+    local s
+    for s in "${set_args[@]}"; do
+        apply_set_arg "${s}"
+    done
+}
+
+# Extract base values from values file, then overlay EXTRA_HELM_OPTS
+BUCKET_NAME=""
+REGION=""
+CREATE_BUCKET=""
+read_hypershift_values_from_file "${VALUES_FILE}"
+apply_extra_helm_opts
 
 # Check if bucket name is defined and not empty
 if [ -z "${BUCKET_NAME}" ] || [ "${BUCKET_NAME}" == "null" ] || [ "${BUCKET_NAME}" == "''" ] || [ "${BUCKET_NAME}" == "" ]; then
     echo "Error: .global.hypershift.oidc.bucketName is not defined in ${VALUES_FILE}"
+    if [ -n "${EXTRA_HELM_OPTS:-}" ]; then
+        echo "       (also not overridden via EXTRA_HELM_OPTS)"
+    fi
     exit 1
 fi
 
 # Remove any quotes from the values
 BUCKET_NAME=$(echo "${BUCKET_NAME}" | tr -d "'" | tr -d '"')
+CREATE_BUCKET=$(echo "${CREATE_BUCKET}" | tr -d "'" | tr -d '"' | tr '[:upper:]' '[:lower:]')
 
 if [ -z "${BUCKET_NAME}" ]; then
     echo "Error: .global.hypershift.oidc.bucketName is empty in ${VALUES_FILE}"
@@ -145,7 +283,7 @@ if [ "${BUCKET_EXISTS}" != "true" ]; then
     echo "Error: S3 bucket '${BUCKET_NAME}' does not exist or is not accessible"
     echo ""
     echo "To create the bucket, either:"
-    echo "  1. Set .global.hypershift.createBucket to true in ${VALUES_FILE}"
+    echo "  1. Set .global.hypershift.createBucket to true in ${VALUES_FILE} (or via EXTRA_HELM_OPTS --set)"
     echo "  2. Or run manually:"
     if [ -n "${REGION}" ]; then
         echo "     ./pattern.sh make create-s3-bucket BUCKET_NAME=${BUCKET_NAME} REGION=${REGION}"

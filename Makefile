@@ -15,8 +15,8 @@ endif
 	@./scripts/create-public-s3-bucket.sh "$(BUCKET_NAME)" "$(REGION)"
 
 .PHONY: verify-s3-bucket
-verify-s3-bucket: ## Verify OIDC S3 bucket is defined and exists
-	@./scripts/verify-s3-bucket.sh values-hypershift.yaml
+verify-s3-bucket: ## Verify OIDC S3 bucket is defined and exists (honors EXTRA_HELM_OPTS)
+	@EXTRA_HELM_OPTS="$(EXTRA_HELM_OPTS)" ./scripts/verify-s3-bucket.sh values-hypershift.yaml
 
 .PHONY: install
 install: verify-s3-bucket pattern-install ## Installs the pattern (verifies S3 bucket first)
